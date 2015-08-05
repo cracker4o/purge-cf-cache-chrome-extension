@@ -29,8 +29,10 @@
 			var owner = this;
 			chrome.tabs.getSelected(null, function(tab) {
 				owner.currentUrl = tab.url;
-				var domain = owner.getDomain(tab.url).replace("www.", "");
-			    owner.getCloudFlareZoneId(domain, owner.purgeCloudFlareUrls)
+				var regex = /^[a-zA-Z0-9]*\./i;
+				var domain = owner.getDomain(tab.url);
+			    domain = domain.replace(domain.match(regex)[0], "");
+			    owner.getCloudFlareZoneId(domain, $.proxy(owner.purgeCloudFlareUrls, owner));
 			});
 		},
 		
@@ -42,30 +44,71 @@
                 email: null
 			}, 
 			
-			function(items) {
+			function(settings) {
             	$.ajax({
 					url: "https://api.cloudflare.com/client/v4/zones?name=" + domain + "&status=active",
-					headers: {
-						"X-Auth-Email" : items.email,
-	                    "X-Auth-Key" : items.key
-					},
-					dataType : "json",
+					beforeSend: function(xhr) {
+				        xhr.setRequestHeader('x-auth-Email', settings.email);
+						xhr.setRequestHeader('x-auth-key', settings.key);
+				    },
+					crossDomain: true,
+					contentType: "application/json",
+					dataType: "json",
 					success: function(data) {
-						callback([owner.currentUrl], data.result[0].id)
+						if(data.success == true && data.result[0]) {
+							callback([owner.currentUrl], data.result[0].id, settings);
+							return;	
+						}
+						
+						owner.setStatusMessage("#status", "PURGE FAILED", 1500);
 					},
 					error: function(err) {
-						
+						owner.setStatusMessage("#status", "PURGE FAILED", 1500);					
 					}
 				});       
 			});
 		},
 		
-		purgeCloudFlareUrls: function(urls, zoneId){
-			alert(urls);
-			alert(zoneId);
+		purgeCloudFlareUrls: function(urls, zoneId, settings){
+			var owner = this;
+			
+			$.ajax({
+					url: "https://api.cloudflare.com/client/v4/zones/" + zoneId + "/purge_cache",
+					method: "DELETE",
+					beforeSend: function(xhr) {
+				        xhr.setRequestHeader('x-auth-Email', settings.email);
+						xhr.setRequestHeader('x-auth-key', settings.key);
+				    },
+					data: JSON.stringify({
+						"files": urls
+					}),
+					crossDomain: true,
+					contentType: "application/json",
+					success: function(data) {
+						if(data.success == true && data.result) {
+							owner.onPurgeSuccess(data.result.id);
+							return;
+						}
+						
+						owner.setStatusMessage("#status", "PURGE FAILED", 1500);
+					},
+					error: function(err) {
+						owner.setStatusMessage("#status", "PURGE FAILED", 1500);
+					}
+				});
+		},
+		onPurgeSuccess : function(id) {
+			this.setStatusMessage("#status", "SUCCESS", 1500);			
 		},
 		
-		getDomain(url) {
+		setStatusMessage: function(element, message, timeout) {
+			$(element).text(message);
+			setTimeout(function() {
+                $(element).text("");
+            }, timeout);			
+		},
+		
+		getDomain : function(url) {
 			   var domain;
 			    if (url.indexOf("://") > -1) {
 			        domain = url.split('/')[2];
@@ -77,9 +120,7 @@
 			    domain = domain.split(':')[0];
 			
 			    return domain;
-		},
-		
-		
+		}
 	};
 	
 	cloudFlarePurge.init();
