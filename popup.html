@@ -3,9 +3,14 @@
   <head>
     <title>Purge CloudFlare</title>
     <script src="jquery-2.1.4.min.js"></script>
+    <link href="main.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
-    <h2>Purge CloudFlare</h2>
+    <h2>CFP EXTENSION</h2>
+    <div class="field">
+      <label for="refresh">Refresh</label>
+      <input id="refresh" type="checkbox" value="false" />
+    </div>
     <button id="purgeButton">Purge Cache</button>
     <div id="status"></div>
     <script src="popup.js"></script>

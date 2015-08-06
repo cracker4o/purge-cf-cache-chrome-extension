@@ -15,6 +15,7 @@
 (function() {
 	var cloudFlarePurge = {	
 		currentUrl : null,
+		currentTabId : null,
 			
 		init : function() {
 			var owner = this;
@@ -28,9 +29,13 @@
 		purgeBtnClick : function() {
 			var owner = this;
 			chrome.tabs.getSelected(null, function(tab) {
-				owner.currentUrl = tab.url;
+				if(tab.url !== undefined) {
+					owner.currentUrl = tab.url;	
+				}
+				
+				owner.currentTabId = tab.id;
 				var regex = /^[a-zA-Z0-9]*\./i;
-				var domain = owner.getDomain(tab.url);
+				var domain = owner.getDomain(owner.currentUrl);
 			    domain = domain.replace(domain.match(regex)[0], "");
 			    owner.getCloudFlareZoneId(domain, $.proxy(owner.purgeCloudFlareUrls, owner));
 			});
@@ -38,6 +43,7 @@
 		
 		getCloudFlareZoneId: function(domain, callback) {
 			var owner = this;
+			$("#purgeButton").attr("class", "loading");
 			chrome.storage.sync.get({
 				tag: "options",
                 key: null,
@@ -60,10 +66,14 @@
 							return;	
 						}
 						
-						owner.setStatusMessage("#status", "PURGE FAILED", 1500);
+						$("#purgeButton").attr("class", "");
+						$("#status").attr("class", "error");
+						owner.setStatusMessage("#status", "PURGE FAILED", 3000);
 					},
 					error: function(err) {
-						owner.setStatusMessage("#status", "PURGE FAILED", 1500);					
+						$("#purgeButton").attr("class", "");
+						$("#status").attr("class", "error");
+						owner.setStatusMessage("#status", "PURGE FAILED", 3000);					
 					}
 				});       
 			});
@@ -90,15 +100,24 @@
 							return;
 						}
 						
-						owner.setStatusMessage("#status", "PURGE FAILED", 1500);
+						$("#purgeButton").attr("class", "");
+						$("#status").attr("class", "error");
+						owner.setStatusMessage("#status", "PURGE FAILED", 3000);
 					},
 					error: function(err) {
-						owner.setStatusMessage("#status", "PURGE FAILED", 1500);
+						$("#purgeButton").attr("class", "");
+						$("#status").attr("class", "error");
+						owner.setStatusMessage("#status", "PURGE FAILED", 3000);
 					}
 				});
 		},
 		onPurgeSuccess : function(id) {
-			this.setStatusMessage("#status", "SUCCESS", 1500);			
+			$("#purgeButton").attr("class", "");
+			$("#status").attr("class", "success");
+			this.setStatusMessage("#status", "SUCCESS", 3000);
+			if($("#refresh").is(":checked")) {
+				chrome.tabs.reload(this.currentTabId, { bypassCache : true });	
+			}		
 		},
 		
 		setStatusMessage: function(element, message, timeout) {

@@ -3,20 +3,23 @@
 <head>
   <title>Purge CloudFlare</title>
   <script src="jquery-2.1.4.min.js"></script>
+  <link href="main.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
-E-mail:
-<label>
-  <input type="text" id="email">
-  Your CloudFlare profile e-mail
-</label>
+<div class="field">
+  <label for="email">
+    E-mail:
+  </label>
+  <input type="text" id="email" placeholder="CloudFlare profile e-mail">
+</div>
 
-Api Key:
-<label>
-  <input type="text" id="key">
-  Your CloudFlare API key
-</label>
+<div class="field">
+  <label for="key">
+    Api Key:
+  </label>
+  <input type="text" id="key" placeholder="CloudFlare API key">
+</div>
 
 <div id="status"></div>
 <button id="save">Save</button>

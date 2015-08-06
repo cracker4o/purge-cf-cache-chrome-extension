@@ -1,0 +1,68 @@
+body {
+	background-color: #FFAA00;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color:white;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+button {
+	background-color: darkorange;
+	color:white;
+	font-size: 1.0em;
+	font-weight: bold;
+	padding: 5px;
+	border: 2px solid white;
+	border-radius: 6px;
+	box-shadow: 3px 3px 3px #ff7500;
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+/*button.loading::before {
+	background-image: url("spinner.gif");
+	background-size: 10px 10px;
+	display: block;
+	width: 10px;
+	height: 10px;
+    content:"";
+}*/
+
+.success {
+	margin:5px;
+	font-weight: bold;
+	font-size: 1.0em;
+}
+
+.error {
+	color:red;
+	margin:5px;
+	font-weight: bold;
+	font-size: 1.0em;	
+}
+
+.field {
+	margin: 10px 4px;
+	font-weight: bold;
+}
+
+.field label {
+	width: 4.2em;
+	display: inline-block;
+}
+
+.field input[type=checkbox] {
+	padding: 5px;
+}
+
+.field input[type=text] {
+	width: 200px;
+	padding: 5px;
+	border: 2px solid white;
+	border-radius: 6px;
+}
