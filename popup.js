@@ -28,7 +28,13 @@
 		
 		purgeBtnClick : function() {
 			var owner = this;
-			chrome.tabs.getSelected(null, function(tab) {
+			var queryInfo = {
+				active : true	
+			};
+			
+			chrome.tabs.query(queryInfo, function(tabs) {
+				var tab = tabs[0];
+				
 				if(tab.url !== undefined) {
 					owner.currentUrl = tab.url;	
 				}
