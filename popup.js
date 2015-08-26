@@ -29,7 +29,8 @@
 		purgeBtnClick : function() {
 			var owner = this;
 			var queryInfo = {
-				active : true	
+				active : true,
+				currentWindow: true	
 			};
 			
 			chrome.tabs.query(queryInfo, function(tabs) {
