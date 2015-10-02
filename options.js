@@ -17,7 +17,8 @@
            settings: {
                tag: "options",
                key: null,
-               email: null
+               email: null,
+               refresh: null
            },
            
            init: function() {
@@ -33,14 +34,16 @@
            saveClick: function() {
                var key = $("#key").val();
                var email = $("#email").val();
+               var refresh = $("#refresh").val();
                
-               if(key === "" || email ==="") {
+               if(key === "" || email ==="" || refresh ==="") {
                    return;
                }
                
                this.settings = {
                  key: key,
-                 email: email  
+                 email: email,
+                 refresh: refresh  
                };
                
                chrome.storage.sync.set(this.settings, function() {
@@ -55,6 +58,13 @@
                chrome.storage.sync.get(this.settings, function(items) {
                    $("#key").val(items.key);
                    $("#email").val(items.email);
+                   
+                   if(items.refresh != null && items.refresh !== undefined) {
+                       $("#refresh").val(items.refresh);    
+                   } else {
+                       $("#refresh").val(10);
+                   }
+                   
                });
            }                          
        };

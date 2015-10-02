@@ -24,15 +24,6 @@ button {
 	text-transform: uppercase;
 }
 
-/*button.loading::before {
-	background-image: url("spinner.gif");
-	background-size: 10px 10px;
-	display: block;
-	width: 10px;
-	height: 10px;
-    content:"";
-}*/
-
 .success {
 	margin:5px;
 	font-weight: bold;
@@ -52,8 +43,14 @@ button {
 }
 
 .field label {
-	width: 4.2em;
+	width: 7em;
 	display: inline-block;
+	text-align: right;
+}
+
+.field.text-center label {
+	text-align: center;
+	width: 4.2em;
 }
 
 .field input[type=checkbox] {
@@ -63,6 +60,12 @@ button {
 .field input[type=text] {
 	width: 200px;
 	padding: 5px;
+	border: 2px solid white;
+	border-radius: 6px;
+}
+
+.group {
+	margin: 0.5em;
 	border: 2px solid white;
 	border-radius: 6px;
 }

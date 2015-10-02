@@ -54,7 +54,8 @@
 			chrome.storage.sync.get({
 				tag: "options",
                 key: null,
-                email: null
+                email: null,
+				refresh: null
 			}, 
 			
 			function(settings) {
@@ -101,9 +102,10 @@
 					}),
 					crossDomain: true,
 					contentType: "application/json",
+					dataType: "json",
 					success: function(data) {
 						if(data.success == true && data.result) {
-							owner.onPurgeSuccess(data.result.id);
+							owner.onPurgeSuccess(data.result.id, settings);
 							return;
 						}
 						
@@ -118,12 +120,15 @@
 					}
 				});
 		},
-		onPurgeSuccess : function(id) {
+		onPurgeSuccess : function(id, settings) {
 			$("#purgeButton").attr("class", "");
 			$("#status").attr("class", "success");
 			this.setStatusMessage("#status", "SUCCESS", 3000);
 			if($("#refresh").is(":checked")) {
-				chrome.tabs.reload(this.currentTabId, { bypassCache : true });	
+				this.refreshCountdown($("#sub-status"), "Refreshing in: ", parseInt(settings.refresh), 
+				function() {
+					chrome.tabs.reload(this.currentTabId, { bypassCache : true });
+				});					
 			}		
 		},
 		
@@ -132,6 +137,20 @@
 			setTimeout(function() {
                 $(element).text("");
             }, timeout);			
+		},
+		
+		refreshCountdown: function(element, message, refreshTimeout, callback) {
+			var interval = setInterval(function() {
+				if(refreshTimeout == 0) {
+					clearInterval(interval);
+					callback();
+					element.text("");
+					return;
+				}
+				
+				refreshTimeout--;
+				element.text(message + refreshTimeout);
+			}, 1000);
 		},
 		
 		getDomain : function(url) {

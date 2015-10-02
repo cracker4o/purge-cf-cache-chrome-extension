@@ -7,18 +7,29 @@
 </head>
 <body>
 
-<div class="field">
-  <label for="email">
-    E-mail:
-  </label>
-  <input type="text" id="email" placeholder="CloudFlare profile e-mail">
+<div class="group">
+    <div class="field">
+      <label for="refresh">
+        Refresh T/O:
+      </label>
+      <input type="text" id="refresh" placeholder="Timeout in seconds" />
+    </div>
 </div>
 
-<div class="field">
-  <label for="key">
-    Api Key:
-  </label>
-  <input type="text" id="key" placeholder="CloudFlare API key">
+<div class="group">
+  <div class="field">
+    <label for="email">
+      E-mail:
+    </label>
+    <input type="text" id="email" placeholder="CloudFlare profile e-mail" />
+  </div>
+  
+  <div class="field">
+    <label for="key">
+      Api Key:
+    </label>
+    <input type="text" id="key" placeholder="CloudFlare API key" />
+  </div>
 </div>
 
 <div id="status"></div>
