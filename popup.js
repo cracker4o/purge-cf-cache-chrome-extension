@@ -59,6 +59,10 @@
 			}, 
 			
 			function(settings) {
+				if(settings.refresh == undefined || settings.refresh == null || settings.refresh == "") {
+					settings.refresh = 10;	
+				}
+				
             	$.ajax({
 					url: "https://api.cloudflare.com/client/v4/zones?name=" + domain + "&status=active",
 					beforeSend: function(xhr) {
