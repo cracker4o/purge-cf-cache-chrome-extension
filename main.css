@@ -37,6 +37,11 @@ button {
 	font-size: 1.0em;	
 }
 
+.button-group {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
 .field {
 	margin: 10px 4px;
 	font-weight: bold;
@@ -68,4 +73,19 @@ button {
 	margin: 0.5em;
 	border: 2px solid white;
 	border-radius: 6px;
+}
+
+.prompt {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background-color: #ff7500;
+}
+
+.prompt.active {
+	display: block;
 }

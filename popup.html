@@ -6,14 +6,25 @@
     <link href="main.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
-    <h2>CFP EXTENSION</h2>
-    <div class="field text-center">
-      <label for="refresh">Refresh</label>
-      <input id="refresh" type="checkbox" checked value="false" />
+    <div class="holder">
+      <div id="lightbox" class="prompt">
+        <div class="field text-center">
+          Purge entire cache?
+        </div>
+        
+        <button id="promptYes">Yes</button>
+        <button id="promptNo">No</button>
+      </div>
+      <h2>CFP EXTENSION</h2>
+      <div class="field text-center">
+        <label for="refresh">Refresh</label>
+        <input id="refresh" type="checkbox" checked value="false" />
+      </div>
+      <button class="button-group" id="purgeAllButton">Purge Entire Cache</button>
+      <button class="button-group" id="purgeButton">Purge current page</button>
+      <div id="status"></div>
+      <div id="sub-status"></div>      
     </div>
-    <button id="purgeButton">Purge Cache</button>
-    <div id="status"></div>
-    <div id="sub-status"></div>
     <script src="popup.js"></script>
   </body>
 </html>

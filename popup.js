@@ -16,17 +16,76 @@
 	var cloudFlarePurge = {	
 		currentUrl : null,
 		currentTabId : null,
+		promptElement : null,
 			
 		init : function() {
 			var owner = this;
-			$("#purgeButton").on("click", function(e) { 
-				e.preventDefault; 
-				owner.purgeBtnClick(); 
+			
+			this.promptElement = $("#lightbox");
+			
+			$("#purgeAllButton").on("click", function(e) {
+				e.preventDefault();	
+				owner.purgeAllBtnClick();
 			});
 			
+			$("#purgeButton").on("click", function(e) { 
+				e.preventDefault(); 
+				owner.purgeBtnClick(); 
+			});	
 		},
 		
-		purgeBtnClick : function() {
+		promptNoClick: function() {
+			this.promptElement.removeClass("active");
+		},
+		
+		promptYesClick: function(yesAction, settings) {
+			this.promptElement.removeClass("active");
+			if(typeof yesAction === "function") {
+				yesAction(settings.domain, settings.callback);	
+			}			
+		},
+		
+		showPrompt: function(yesAction, settings) {
+			this.promptElement.addClass("active");
+			var owner = this;
+			
+			$("#promptYes").on("click", function(e) {
+				e.preventDefault();
+				owner.promptYesClick(yesAction, settings); 
+			});
+			
+			$("#promptNo").on("click", function(e) {
+				e.preventDefault();
+				owner.promptNoClick(); 
+			});			
+		},
+		
+		purgeAllBtnClick: function() {
+			var owner = this;			
+			this.getCurrentTab(function(tab) {
+				var regex = /^[a-zA-Z0-9]*\./i;
+				var domain = owner.getDomain(owner.currentUrl);
+			    domain = domain.replace(domain.match(regex)[0], "");
+				
+				var settings = { domain : domain, 
+						         callback : $.proxy(owner.purgeEntireCloudflareCache, owner)
+				};
+				
+				owner.showPrompt($.proxy(owner.getCloudFlareZoneId, owner), settings);
+			});
+		},
+		
+		purgeBtnClick: function() {
+			var owner = this;			
+			this.getCurrentTab(function(tab) {
+				var regex = /^[a-zA-Z0-9]*\./i;
+				var domain = owner.getDomain(owner.currentUrl);
+			    domain = domain.replace(domain.match(regex)[0], "");
+			    owner.getCloudFlareZoneId(domain, $.proxy(owner.purgeCloudFlareUrls, owner));				
+			});
+		},
+		
+		getCurrentTab: function(callback) {
 			var owner = this;
 			var queryInfo = {
 				active : true,
@@ -38,13 +97,13 @@
 				
 				if(tab.url !== undefined) {
 					owner.currentUrl = tab.url;	
-				}
+				}	
 				
 				owner.currentTabId = tab.id;
-				var regex = /^[a-zA-Z0-9]*\./i;
-				var domain = owner.getDomain(owner.currentUrl);
-			    domain = domain.replace(domain.match(regex)[0], "");
-			    owner.getCloudFlareZoneId(domain, $.proxy(owner.purgeCloudFlareUrls, owner));
+				
+				if(typeof callback === "function") {
+					callback(tab);	
+				}
 			});
 		},
 		
@@ -74,7 +133,7 @@
 					dataType: "json",
 					success: function(data) {
 						if(data.success == true && data.result[0]) {
-							callback([owner.currentUrl], data.result[0].id, settings);
+							callback(data.result[0].id, settings);
 							return;	
 						}
 						
@@ -91,9 +150,17 @@
 			});
 		},
 		
-		purgeCloudFlareUrls: function(urls, zoneId, settings){
+		purgeCloudFlareUrls: function(zoneId, settings) {
+			var urls = [this.currentUrl];
+			this.cloudFlareApiPurgeCache({ "files": urls }, zoneId, settings);
+		},
+		
+		purgeEntireCloudflareCache: function(zoneId, settings) {
+			this.cloudFlareApiPurgeCache({ "purge_everything": true }, zoneId, settings);
+		},
+		
+		cloudFlareApiPurgeCache: function(data, zoneId, settings) {
 			var owner = this;
-			
 			$.ajax({
 					url: "https://api.cloudflare.com/client/v4/zones/" + zoneId + "/purge_cache",
 					method: "DELETE",
@@ -101,9 +168,7 @@
 				        xhr.setRequestHeader('x-auth-Email', settings.email);
 						xhr.setRequestHeader('x-auth-key', settings.key);
 				    },
-					data: JSON.stringify({
-						"files": urls
-					}),
+					data: JSON.stringify(data),
 					crossDomain: true,
 					contentType: "application/json",
 					dataType: "json",
@@ -122,8 +187,9 @@
 						$("#status").attr("class", "error");
 						owner.setStatusMessage("#status", "PURGE FAILED", 3000);
 					}
-				});
+			});				
 		},
+		
 		onPurgeSuccess : function(id, settings) {
 			$("#purgeButton").attr("class", "");
 			$("#status").attr("class", "success");
