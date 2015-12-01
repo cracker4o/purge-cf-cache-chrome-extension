@@ -96,7 +96,7 @@
 				var tab = tabs[0];
 				
 				if(tab.url !== undefined) {
-					owner.currentUrl = tab.url;	
+					owner.currentUrl = tab.url.split("#")[0];
 				}	
 				
 				owner.currentTabId = tab.id;
