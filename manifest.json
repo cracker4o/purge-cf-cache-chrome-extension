@@ -3,7 +3,7 @@
   "name": "CloudFlare Purge Plugin",
   "short_name": "CloudFlare Purge",
   "description": "This extension can purge the CloudFlare cache for the current page of your CloudFlare enabled website",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "options_page": "options.html",
   "icons": { "19": "icon.png",
             "48": "icon48.png" 
