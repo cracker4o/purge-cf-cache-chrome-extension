@@ -86,6 +86,30 @@ button {
 	background-color: #ff7500;
 }
 
+#infoBtn {
+    position:absolute;
+    top:4px;
+    left:4px;
+    cursor: pointer;
+}
+
+#infoBtn > img {
+    width: 20px;
+    height: 20px;
+}
+
+#details {
+    display: none;
+}
+
+#details.active {
+    display: block;
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: left;
+    width: 220px;
+}
+
 .prompt.active {
 	display: block;
 }

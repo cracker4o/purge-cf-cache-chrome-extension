@@ -13,7 +13,7 @@
    limitations under the License. */
    
 (function() {
-	var cloudFlarePurge = {	
+	window.cloudFlarePurge = {	
 		currentUrl : null,
 		currentTabId : null,
 		promptElement : null,
@@ -233,5 +233,5 @@
 		}
 	};
 	
-	cloudFlarePurge.init();
+	window.cloudFlarePurge.init();
 })();
