@@ -119,7 +119,7 @@
                         var cacheStatus = request.getResponseHeader("cf-cache-status");
                         var cacheControl = request.getResponseHeader("cache-control");
                         
-                        if(cfRay == null || cacheStatus == null) {
+                        if(cfRay == null && cacheStatus == null) {
                           $("#purgeButton").attr("class", "");
 						  $("#status").attr("class", "error");
 						  window.cloudFlarePurge.setStatusMessage("#status", "NO INFO AVAILABLE", 3000);
