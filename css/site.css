@@ -1,15 +1,31 @@
+html {
+    font-family: "Roboto"
+}
+
+a {
+    color:white !important;
+}
+
+a:hover {
+    color: black !important;
+}
+
+h1,h2,h3,h4 {
+    letter-spacing: -0.045em;
+}
+
 /* MOBILE */
 @media only screen and (min-width:10px) {
-    .small-hidden {
-        display: none !important;
-    } 
+    .github-link {
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 /* TABLET */
 @media only screen and (min-width:600px) {
-    .small-hidden {
-        display: block !important;
-    }
+
 }
 
 /* DESKTOP */

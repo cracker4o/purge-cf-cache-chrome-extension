@@ -4,32 +4,68 @@
     <head>
         <title>The home page of the CloudFlare purge plugin</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+        <link rel="stylesheet" href="css/site.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js" async></script>
-        <script type="text/javascript" src="/scripts/site.js" async></script>
+        <script type="text/javascript" src="scripts/site.js" async></script>
     </head>
     <body>
         <main>
-            <div class="row">
-                <div class="col s12 m9 l10">
-                    <div class="paralax-conainer">
-                        <div class="paralax">
-                            <h1>CF-Purge</h1>
-                            <h4>A simple Chrome extension that saves time.</h3>    
+            <div class="section amber darken-3">
+                <div class="row">
+                    <div class="col s12 m6 l6 white-text">
+                        <h1>CF-Purge</h1>
+                        <h4>The Chrome extension that clears CDN cache and saves time.</h4>  
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <div class="row">
+                            <div class="col s2">
+                                <a href="https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok"><img class="github-link" src="media/Google-Chrome-icon-120px.png" alt="Chrome Extension" /> <div class="center-align">CHROME WEB STORE</div></a>
+                            </div>
+                            <div class="col s2">
+                                <a href="https://github.com/cracker4o/purge-cf-cache-chrome-extension"><img class="github-link" src="media/GitHub-Mark-Light-120px-plus.png" alt="GitHub repository" />
+                                <div class="center-align">
+                                    GITHUB
+                                </div></a>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="section blue">
-                        <h2>How it works?</h2>
-                    </div>
-                    
-                    <div class="section white">
-                        <h2>Instructions</h2>
-                    </div>
-                    
-                </div>
-                <div class="col small-hidden m3 l2">
                 </div>
             </div>
+            
+            <div class="section deep-orange darken-2 white-text">
+                <div class="row">
+                    <div class="col s12">
+                        <h3>How it works?</h3>
+                        The CloudFlare purge plugin uses CloudFlare's API to clear the cache for the URL in the currently opened Chrome tab. The extension has the ability to purge the entire cache for the current domain. It also has the ability to provide information about the caching status of the current URL and tell the location of the CloudFlare node that serves the cached contents.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section white deep-orange-text">
+                <div class="row">
+                    <div class="col s12">
+                        <h3>Instructions</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section deep-orange darken-2 white-text">
+                <div class="row">
+                    <div class="col s12">
+                        <h3>How to contribute?</h3>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="section black-text">
+                
+            </div>
         </main>
+        <footer class="page-footer amber darken-3">
+            <div class="section"></div>
+            <div class="footer-copyright center-align grey-text text-lighten-4 amber darken-4">
+                The CloudFlare Purge plugin is free for use. It falls under the terms and conditions of the Apache v2.0 license. &copy;2016 - <a class="white-text" href="mailto:cracker4o@gmail.com">Tosho Toshev</a>
+            </div>
+        </footer>
     </body>
 </html>
