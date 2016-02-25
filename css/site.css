@@ -1,16 +1,23 @@
 html {
-    font-family: "Roboto"
+    font-family: "Roboto";
+    font-size: 18px;
 }
 
 a {
-    color:white !important;
+    color:white;
 }
 
 a:hover {
-    color: black !important;
+    color: black;
 }
 
-h1,h2,h3,h4 {
+h1 {
+    letter-spacing: -0.045em;
+    font-weight: 700;
+    text-shadow: 2px 2px #e65100;
+}
+
+h2,h3,h4 {
     letter-spacing: -0.045em;
 }
 
@@ -21,6 +28,19 @@ h1,h2,h3,h4 {
         margin-left: auto;
         margin-right: auto;
     }
+    
+    .accent-link {
+        font-size: 20px;
+        font-weight: 700;
+    }
+    
+    .cloudflare-logo {
+        width: 200px;
+    }
+    
+    .small-text {
+        font-size: 10px;
+    }
 }
 
 /* TABLET */
@@ -30,5 +50,5 @@ h1,h2,h3,h4 {
 
 /* DESKTOP */
 @media only screen and (min-width:1024px) {
-    
+
 }
