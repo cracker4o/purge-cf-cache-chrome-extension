@@ -80,7 +80,11 @@
 			this.getCurrentTab(function(tab) {
 				var regex = /^[a-zA-Z0-9]*\./i;
 				var domain = owner.getDomain(owner.currentUrl);
-			    domain = domain.replace(domain.match(regex)[0], "");
+                var count = (domain.match(/\./g) || []).length;
+                if(count > 1) {
+                    domain = domain.replace(domain.match(regex)[0], "");    
+                }
+                
 			    owner.getCloudFlareZoneId(domain, $.proxy(owner.purgeCloudFlareUrls, owner));				
 			});
 		},
