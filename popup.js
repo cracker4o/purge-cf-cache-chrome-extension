@@ -148,12 +148,23 @@
 					error: function(err) {
 						$("#purgeButton").attr("class", "");
 						$("#status").attr("class", "error");
-						owner.setStatusMessage("#status", "PURGE FAILED", 3000);					
+						
+						var customHtml = owner.parseError(err);
+						owner.setStatusMessage("#status", "PURGE FAILED", 5000, customHtml);					
 					}
 				});       
 			});
 		},
 		
+		parseError: function(err) {
+			var customHtml = "";
+			for(var i = 0; i < err.responseJSON.errors.length; i++) {
+				customHtml += "<p> " + err.responseJSON.errors[i].code + " " + err.responseJSON.errors[i].message + " </p>"
+			}
+
+			return customHtml;
+		},
+
 		purgeCloudFlareUrls: function(zoneId, settings) {
 			var urls = [this.currentUrl];
 			this.cloudFlareApiPurgeCache({ "files": urls }, zoneId, settings);
@@ -189,7 +200,8 @@
 					error: function(err) {
 						$("#purgeButton").attr("class", "");
 						$("#status").attr("class", "error");
-						owner.setStatusMessage("#status", "PURGE FAILED", 3000);
+						var customHtml = owner.parseError(err);
+						owner.setStatusMessage("#status", "PURGE FAILED", 5000, customHtml);
 					}
 			});				
 		},
@@ -206,8 +218,18 @@
 			}		
 		},
 		
-		setStatusMessage: function(element, message, timeout) {
+		setStatusMessage: function(element, message, timeout, customHtml) {
 			$(element).text(message);
+			$(element).css("cursor", "pointer");
+			$(element).on("click", function() {
+				if(customHtml != null && customHtml.length > 0) {
+					var errorLog = $(element).find("#errorLog");
+					if(errorLog.length > 0) {
+						$(errorLog).remove();
+					}
+					$(element).append("<div id='errorLog'><br/>" + customHtml + "</div>");
+				}
+			});
 			setTimeout(function() {
                 $(element).text("");
             }, timeout);			
