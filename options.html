@@ -8,33 +8,60 @@
 <body>
 
 <div class="group">
-    <div class="field">
+  <div class="group-title">
+    Extension settings
+  </div>
+   <div class="field">
+    <div class="left-part">
       <label for="refresh">
         Refresh T/O:
       </label>
+    </div>
+    <div class="right-part">
       <input type="text" id="refresh" placeholder="Timeout in seconds" />
     </div>
-</div>
-
-<div class="group">
-  <div class="field">
-    <label for="email">
-      E-mail:
-    </label>
-    <input type="text" id="email" placeholder="CloudFlare profile e-mail" />
+    <div class="clear"></div>
   </div>
+  <div class="field">
+    <div class="left-part">
+      <label for="email">
+        E-mail:
+      </label>
+    </div>
+    <div class="right-part">
+      <input type="text" id="email" placeholder="CloudFlare profile e-mail" />
+    </div>
+  </div>
+  <div class="clear"></div>
+ 
   
   <div class="field">
-    <label for="key">
-      Api Key:
-    </label>
-    <input type="text" id="key" placeholder="CloudFlare API key" />
+    <div class="left-part">
+      <label for="key">
+        Api Key:
+      </label>
+    </div>
+    <div class="right-part">
+      <input type="text" id="key" placeholder="CloudFlare API key" />
+    </div>
+    <div class="clear"></div>
+  </div>
+  <button id="save">Save</button>
+  <div id="status"></div>
+</div>
+
+<div id="custom-purge-group" class="group">
+  <div class="group-title">
+    Purge a custom URL
+  </div>
+  <div class="field">
+    <input type="text" id="custom-url" placeholder="Enter URL to purge" />
+    <button id="custom-purge">Purge</button>
+    <div id="purge-status"></div>
   </div>
 </div>
 
-<div id="status"></div>
-<button id="save">Save</button>
-
+<script src="api.js"></script>
 <script src="options.js"></script>
 </body>
 </html>

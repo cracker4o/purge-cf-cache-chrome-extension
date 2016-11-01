@@ -1,6 +1,6 @@
 body {
 	background-color: #FFAA00;
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
 	color:white;
 	text-align: center;
 }
@@ -9,6 +9,10 @@ h2 {
 	font-size: 1.2em;
 	font-weight: bold;
 	text-transform: uppercase;
+}
+
+.clear {
+	clear: both;
 }
 
 button {
@@ -51,6 +55,8 @@ button {
 	width: 7em;
 	display: inline-block;
 	text-align: right;
+	line-height: 30px;
+    margin-right: 10px;
 }
 
 .field.text-center label {
@@ -73,6 +79,7 @@ button {
 	margin: 0.5em;
 	border: 2px solid white;
 	border-radius: 6px;
+	padding: 10px;
 }
 
 .prompt {
@@ -112,4 +119,16 @@ button {
 
 .prompt.active {
 	display: block;
+}
+
+.left-part {
+	width: 50%;
+	text-align: right;
+	float:left;
+}
+
+.right-part {
+	width: 50%;
+	text-align: left;
+	float:left;
 }

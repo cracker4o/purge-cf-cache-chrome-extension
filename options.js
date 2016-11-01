@@ -12,7 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License. */
    
-   (function() {
+   (function(cloudflareApi) {
        var options = {
            settings: {
                tag: "options",
@@ -30,6 +30,15 @@
                
                this.restoreOptions();
            },
+
+           setStatusMessage: function(element, message, timeout) {
+			    $(element).text(message);
+			    $(element).css("cursor", "pointer");
+			    
+                setTimeout(function() {
+                    $(element).text("");
+                }, timeout);			
+		   },
            
            saveClick: function() {
                var key = $("#key").val();
@@ -53,6 +62,31 @@
                     }, 1500);
                });
            },
+
+           customPurgeClick: function() {
+               var url = $("#custom-url").val();
+               var key = $("#key").val();
+               var email = $("#email").val();
+
+               if(url == "") {
+                   return;
+               }
+
+               var domain = cloudflareApi.helpers.getDomain(url);
+               if(domain == "") {
+                   return;
+               }
+
+               cloudflareApi.api.getZoneId(domain, email, key, function(zoneId) {
+                   cloudflareApi.api.purgeCache({ "files": [url] }, zoneId, email, key, function(purgeSuccessId) {
+                       options.setStatusMessage("#purge-status", "PURGE SUCESSFUL - Purge vector: " + purgeSuccessId, 3000)
+                   }, function(errorMessage) {
+                       options.setStatusMessage("#purge-status", errorMessage, 3000)
+                   });
+               }, function(errorMessage) {
+                   options.setStatusMessage("#purge-status", errorMessage, 3000)
+               });
+           },
            
            restoreOptions: function() {
                chrome.storage.sync.get(this.settings, function(items) {
@@ -70,4 +104,4 @@
        };
        
        options.init();
-   })();
+   })(cloudflare);
