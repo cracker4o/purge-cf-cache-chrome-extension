@@ -39,6 +39,7 @@
            setStatusMessage: function(element, message, timeout) {
 			    $(element).text(message);
 			    $(element).css("cursor", "pointer");
+                $(element).css("margin-top", "10px");
 			    
                 setTimeout(function() {
                     $(element).text("");

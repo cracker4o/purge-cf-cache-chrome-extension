@@ -19,7 +19,9 @@ cloudflare = {
             var parser = document.createElement('a');
             parser.href = url;
             domain = parser.hostname;
-
+            var regex = /^[a-zA-Z0-9]*\./i;
+            domain = domain.replace(domain.match(regex)[0], "");
+            
             return domain;
         }
     },
