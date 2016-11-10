@@ -41,6 +41,10 @@ h2,h3,h4 {
     .small-text {
         font-size: 10px;
     }
+
+    footer.page-footer {
+        margin-top:0px;
+    }
 }
 
 /* TABLET */
