@@ -1,6 +1,6 @@
 # CloudFlare Purge Plugin
 Welcome to the CloudFlare Purge Plugin repository.
-The CF-Purge is a chrome extension that purges the cache for the current URL on CloudFlare enabled websites.
+CF-Purge is a chrome extension that purges the cache for the current URL on CloudFlare enabled websites.
 You can find the Chrome extension [here](https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok).
 
 You can find more information about the "CloudFlare Purge Plugin" at [www.cf-purge.com](http://www.cf-purge.com).
