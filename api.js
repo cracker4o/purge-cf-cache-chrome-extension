@@ -12,7 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License. */
 
-cloudflare = {
+var cloudflare = {
     helpers : {
         getDomain : function(url) {
             var domain;
@@ -47,18 +47,16 @@ cloudflare = {
                 },
                 crossDomain: true,
                 contentType: "application/json",
-                dataType: "json",
-                success: function(data) {
+                dataType: "json"})
+             .done(function(data) {
                     if(data.success == true && data.result[0]) {
                         successCallback(data.result[0].id);
                         return;
                     }
                     failureCallback("Unable to get the zone ID.");
-                },
-                error: function(err) {        
+             }).fail(function(err) {        
                     failureCallback(owner.parseError(err));					
-                }
-            });       
+             });       
         },
 
         purgeCache: function(purgeOptions, zoneId, email, key, successCallback, failureCallback) {
@@ -73,18 +71,15 @@ cloudflare = {
 					data: JSON.stringify(purgeOptions),
 					crossDomain: true,
 					contentType: "application/json",
-					dataType: "json",
-					success: function(data) {
-						if(data.success == true && data.result) {
-							successCallback(data.result.id);
-                            return;
-						}
-
-                        failureCallback("Unable to clear the cache.");
-					},
-					error: function(err) {
-						failureCallback(owner.parseError(err));
-					}
+					dataType: "json"})
+            .done(function(data) {
+			    if(data.success == true && data.result) {
+				    successCallback(data.result.id);
+                    return;
+				}
+                failureCallback("Unable to clear the cache.");
+            }).fail(function(err) {
+				failureCallback(owner.parseError(err));
 			});
         }
     }
