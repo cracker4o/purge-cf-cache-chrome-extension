@@ -85,7 +85,7 @@
                if(url === "") {
                    return;
                }
-
+               url = url.split("\n").join(',');
                var urls = url.indexOf(',') >= 0 ? url.split(',') : [url];
                
                for(var i = 0; i < urls.length; i++) {

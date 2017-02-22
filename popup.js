@@ -150,20 +150,20 @@
 			this.promptElement.removeClass("active");
 		},
 
-		promptYesClick: function (yesAction) {
+		promptYesClick: function (domain, yesAction) {
 			this.promptElement.removeClass("active");
 			if (typeof yesAction === "function") {
-				yesAction(this.settings.domain, this.settings.callback);
+				yesAction(domain);
 			}
 		},
 
-		showPrompt: function (yesAction) {
+		showPrompt: function (domain, yesAction) {
 			this.promptElement.addClass("active");
 			var owner = this;
 
 			$("#promptYes").on("click", function (e) {
 				e.preventDefault();
-				owner.promptYesClick(yesAction);
+				owner.promptYesClick(domain, yesAction);
 			});
 
 			$("#promptNo").on("click", function (e) {
@@ -182,7 +182,7 @@
 					domain = domain.replace(domain.match(regex)[0], "");
 				}
 
-				owner.showPrompt(function(domain) {
+				owner.showPrompt(domain, function(domain) {
 					owner.purgeEntireCloudflareCache(domain); 
 				});
 			});
@@ -195,27 +195,13 @@
 								owner.settings.email, 
 								owner.settings.key, 
 								function(zoneId) {
-									owner.purgeCloudFlareUrls(zoneId, {"files": [owner.currentUrl]});
+									owner.purgeCloudFlareUrls(zoneId, { "purge_everything": true });
 								},
 								function (err) {
 									$("#purgeButton").attr("class", "");
 									$("#status").attr("class", "error");
 									owner.setStatusMessage("#status", "PURGE FAILED", 5000, err);
 								});
-
-			cloudflare.api.purgeCache({ "purge_everything": true },
-				zoneId,
-				owner.settings.email,
-				owner.settings.key,
-				function (id) {
-					owner.onPurgeSuccess(id);
-				},
-				function (err) {
-					$("#purgeButton").attr("class", "");
-					$("#status").attr("class", "error");
-					owner.setStatusMessage("#status", "PURGE FAILED", 5000, err);
-				})
-
 		},
 
 		onPurgeSuccess: function (id) {
