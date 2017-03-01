@@ -31,20 +31,25 @@
                $("#custom-purge").on("click", function(e) {
                    e.preventDefault();
                    owner.customPurgeClick();
-               })
+               });
+
+               $("#optionsButton").on("click", function(e) {
+                   e.preventDefault();
+                   chrome.tabs.create({'url': "/options.html" } )
+               });
                
                this.restoreOptions();
            },
 
            setStatusMessage: function(element, message, timeout) {
-			    $(element).text(message);
-			    $(element).css("cursor", "pointer");
+                $(element).text(message);
+                $(element).css("cursor", "pointer");
                 $(element).css("margin-top", "10px");
-			    
+                
                 setTimeout(function() {
                     $(element).text("");
                 }, timeout);			
-		   },
+           },
            
            saveClick: function() {
                var key = $("#key").val();

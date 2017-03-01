@@ -18,10 +18,14 @@
 		currentTabId: null,
 		promptElement: null,
 		settings: null,
+		settingsSet: false,
 
 		init: function () {
 			var owner = this;
 
+			$("#purgeButton").hide();
+			$("#purgeAllButton").hide();
+			$("#optionsButton").show();
 			this.promptElement = $("#lightbox");
 
 			$("#purgeAllButton").on("click", function (e) {
@@ -34,6 +38,11 @@
 				owner.purgeBtnClick();
 			});
 
+			$("#optionsButton").on("click", function (e) {
+				e.preventDefault();
+				chrome.tabs.create({'url': "/options.html" } );
+			});
+
 			chrome.storage.sync.get({
 				tag: "options",
 				key: null,
@@ -42,8 +51,19 @@
 			},
 			function (settings) {
 				owner.settings = settings;
+				owner.settingsSet = true;
+				if(owner.settings.email == null || owner.settings.key == null || owner.settings.key == "" || owner.settings.email == "") {
+					owner.settingsSet = false;
+				}
+
 				if (owner.settings.refresh == undefined || owner.settings.refresh == null || owner.settings.refresh == "") {
 					owner.settings.refresh = 10;
+				}
+
+				if(owner.settingsSet) {
+					$("#purgeButton").show();
+					$("#purgeAllButton").show();
+					$("#optionsButton").hide();
 				}
 			});
 		},
