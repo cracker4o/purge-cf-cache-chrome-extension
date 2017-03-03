@@ -1,19 +1,28 @@
+html {
+	height: 100%;
+}
+
 body {
 	background-color: white;
 	font-family: "Open Sans",sans-serif;
 	color:white;
 	text-align: center;
 	font-size: 16px;
-	background: linear-gradient(to bottom left,#85cba8,#76c4e2);
+	background: linear-gradient(to bottom left,#85cba8,#76c4e2) no-repeat;
 	background-position: center;
 	background-size: cover;
 	min-width: 210px;
 }
 
 h2 {
-	font-size: 1.1em;
+	/*font-size: 1.1em;*/
 	font-weight: normal;
 	text-transform: uppercase;
+	font-family: 'Open Sans', sans-serif; 
+	font-size: 20px; 
+	font-weight: 300; 
+	line-height: 32px;
+
 }
 
 .clear {
@@ -99,7 +108,7 @@ button:hover {
 	width: 100%;
 	height: 100%;
 	z-index: 10;
-	background: linear-gradient(to bottom left,#85cba8,#76c4e2);
+	background: linear-gradient(to bottom left,#85cba8,#76c4e2) no-repeat;
 }
 
 #infoBtn {
@@ -142,8 +151,75 @@ button:hover {
 	float:left;
 }
 
+.warning {
+	background-color: #bf360c;
+}
+
 #custom-url {
 	width:350px;
 	height:80px;
 	border-radius: 6px;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+	position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+input[type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+[type="checkbox"]+label {
+	position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+}
+
+[type="checkbox"].filled-in:checked+label:before {
+	top: 0;
+    left: 1px;
+    width: 8px;
+    height: 13px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    -webkit-transform: rotateZ(37deg);
+    transform: rotateZ(37deg);
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+}
+
+[type="checkbox"].filled-in+label:before, 
+[type="checkbox"].filled-in+label:after {
+	content: '';
+    left: 0;
+    position: absolute;
+    transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
+    z-index: 1;
+}
+
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
+	content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    z-index: 0;
+    border: 2px solid white;
+    border-radius: 1px;
+    margin-top: 2px;
+    transition: .2s;	
 }
