@@ -8,6 +8,9 @@ You can find more information about the "CloudFlare Purge Plugin at [www.cf-purg
 The CloudFlare purge plugin uses the CloudFlare API to purge any page of a website that serves its contents through the CloudFlare CDN. After you set your CF e-mail and API key in the options, you can purge the cache of any page of your CF enabled website. After version 1.3, you can purge the entire cache for the domain of your current tab.
 
 #Changeset
+
+v1.4.0: Changed the design to reflect the new CloudFlare design guidelines. Refactored the extension code and optimized the API calls.
+
 v1.3.6: Added the ability to purge multiple URLs from the options page
 
 v1.3.5: Added a way to check the error message that gets returned from CloudFlare by clicking on the "Purge failed" red text
