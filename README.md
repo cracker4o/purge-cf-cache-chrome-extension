@@ -9,6 +9,8 @@ The CloudFlare purge plugin uses the CloudFlare API to purge any page of a websi
 
 #Changeset
 
+v1.4.1: Fixed a critical issue when purging domains without a leading sub-domain
+
 v1.4.0: Changed the design to reflect the new CloudFlare design guidelines. Refactored the extension code and optimized the API calls.
 
 v1.3.6: Added the ability to purge multiple URLs from the options page

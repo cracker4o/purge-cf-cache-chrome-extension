@@ -20,7 +20,11 @@ var cloudflare = {
             parser.href = url;
             domain = parser.hostname;
             var regex = /^[a-zA-Z0-9]*\./i;
-            domain = domain.replace(domain.match(regex)[0], "");
+
+            var count = (domain.match(/\./g) || []).length;
+			if (count > 1) {
+			    domain = domain.replace(domain.match(regex)[0], "");
+			}
             
             return domain;
         }

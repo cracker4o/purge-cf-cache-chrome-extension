@@ -128,11 +128,6 @@
 			this.getCurrentTab(function (tab) {
 				var regex = /^[a-zA-Z0-9]*\./i;
 				var domain = cloudflare.helpers.getDomain(owner.currentUrl);
-				var count = (domain.match(/\./g) || []).length;
-				if (count > 1) {
-					domain = domain.replace(domain.match(regex)[0], "");
-				}
-
 				cloudflare.api.getZoneId(
 								domain, 
 								owner.settings.email, 
@@ -197,11 +192,6 @@
 			this.getCurrentTab(function (tab) {
 				var regex = /^[a-zA-Z0-9]*\./i;
 				var domain = cloudflare.helpers.getDomain(owner.currentUrl);
-				var count = (domain.match(/\./g) || []).length;
-				if (count > 1) {
-					domain = domain.replace(domain.match(regex)[0], "");
-				}
-
 				owner.showPrompt(domain, function(domain) {
 					owner.purgeEntireCloudflareCache(domain); 
 				});
