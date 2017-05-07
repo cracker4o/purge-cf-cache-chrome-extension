@@ -28,6 +28,10 @@
                    owner.saveClick();                
                });
 
+               $("#hide-purge-all").on("change", function(e) {
+                   owner.saveClick();
+               });
+
                $("#custom-purge").on("click", function(e) {
                    e.preventDefault();
                    owner.customPurgeClick();
@@ -50,11 +54,12 @@
                     $(element).text("");
                 }, timeout);			
            },
-           
+
            saveClick: function() {
                var key = $("#key").val();
                var email = $("#email").val();
                var refresh = $("#refresh").val();
+               var hidePurgeAll = $("#hide-purge-all").is(":checked");
                
                if(key === "" || email ==="" || refresh ==="") {
                    return;
@@ -63,7 +68,8 @@
                this.settings = {
                  key: key,
                  email: email,
-                 refresh: refresh  
+                 refresh: refresh, 
+                 hidePurgeAll: hidePurgeAll
                };
                
                chrome.storage.sync.set(this.settings, function() {
@@ -130,7 +136,8 @@
                chrome.storage.sync.get(this.settings, function(items) {
                    $("#key").val(items.key);
                    $("#email").val(items.email);
-                   
+                   $("#hide-purge-all").prop("checked", items.hidePurgeAll);
+
                    if(items.refresh != null && items.refresh !== undefined) {
                        $("#refresh").val(items.refresh);    
                    } else {

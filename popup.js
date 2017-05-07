@@ -47,7 +47,8 @@
 				tag: "options",
 				key: null,
 				email: null,
-				refresh: null
+				refresh: null,
+				hidePurgeAll: false
 			},
 			function (settings) {
 				owner.settings = settings;
@@ -62,7 +63,11 @@
 
 				if(owner.settingsSet) {
 					$("#purgeButton").show();
-					$("#purgeAllButton").show();
+
+					if(!owner.settings.hidePurgeAll) {
+						$("#purgeAllButton").show();
+					}
+
 					$("#optionsButton").hide();
 				}
 			});
