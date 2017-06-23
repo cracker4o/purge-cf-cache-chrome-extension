@@ -86,7 +86,7 @@ button:hover {
 	padding: 5px;
 }
 
-.field input[type=text] {
+.field input[type=text], .field input[type=password] {
 	width: 200px;
 	padding: 5px;
 	border: 2px solid white;
