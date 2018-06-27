@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Purge CloudFlare</title>
+  <script src="jquery-3.1.1.min.js"></script>
+  <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+  <div class="group">
+    <div class="group-title">
+      Extension settings
+    </div>
+    <div class="field">
+      <div class="left-part">
+        <label for="refresh">
+        Refresh T/O:
+      </label>
+      </div>
+      <div class="right-part">
+        <input type="text" id="refresh" placeholder="Timeout in seconds" />
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="field">
+      <div class="left-part">
+        <label for="hide-purge-all">
+          Hide Purge All:
+        </label>
+      </div>
+      <div class="right-part">
+          <input class="filled-in" type="checkbox" id="hide-purge-all" />
+          <label for="hide-purge-all">
+        </label>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="field">
+      <div class="left-part">
+        <label for="email">
+        E-mail:
+      </label>
+      </div>
+      <div class="right-part">
+        <input type="text" id="email" placeholder="CloudFlare profile e-mail" />
+      </div>
+    </div>
+    <div class="clear"></div>
+
+
+    <div class="field">
+      <div class="left-part">
+        <label for="key">
+        Api Key:
+      </label>
+      </div>
+      <div class="right-part">
+        <input type="password" id="key" placeholder="CloudFlare API key" />
+      </div>
+      <div class="clear"></div>
+    </div>
+    <button id="save">Save</button>
+    <div id="status"></div>
+  </div>
+
+  <div id="custom-purge-group" class="group">
+    <div class="group-title">
+      URLs to purge
+    </div>
+    <div class="field">
+      <textarea id="custom-url" placeholder="one or more URLs separated with , or a new line"></textarea>
+    </div>
+    <button id="custom-purge">Purge</button>
+    <div id="purge-status"></div>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="options.js"></script>
+</body>
+
+</html>
