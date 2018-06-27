@@ -9,6 +9,8 @@ The CloudFlare purge plugin uses the CloudFlare API to purge any page of a websi
 
 #Changeset
 
+v1.5.0: Added support for Mozilla Firefox
+
 v1.4.3: Masked the API key input. Fixed issues with the parsing of second level domains in the URL.
 
 v1.4.2: Added an option to show/hide the "Purge Entire Cache" button
