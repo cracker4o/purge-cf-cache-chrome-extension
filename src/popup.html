@@ -8,8 +8,7 @@
   <body>
     <div class="holder">
       <div id="lightbox" class="prompt">
-        <div class="field text-center">
-          Purge entire cache?
+        <div class="field text-center" id="prompt-text">
         </div>
         
         <button id="promptYes">Yes</button>
@@ -19,6 +18,10 @@
       <div class="field text-center">
         <input id="refresh" class="filled-in" type="checkbox" checked value="false" />
         <label for="refresh">Refresh</label>
+      </div>
+      <div class="field text-center dev-mode-wrapper">
+        <input id="dev-mode" class="filled-in" type="checkbox" />
+        <label for="dev-mode">DEV mode</label>
       </div>
       <button class="button-group" id="optionsButton">Configure plugin</button>
       <button class="button-group warning" id="purgeAllButton">Purge Entire Cache</button>

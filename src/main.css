@@ -113,6 +113,9 @@ button:hover {
 	z-index: 10;
 	background: linear-gradient(to bottom left,#85cba8,#76c4e2) no-repeat;
 }
+.prompt button {
+	margin-top: 10px;
+}
 
 #infoBtn {
     position:absolute;
@@ -186,7 +189,8 @@ input[type="checkbox"] {
     -webkit-user-select: none;
     -moz-user-select: none;
     -khtml-user-select: none;
-    -ms-user-select: none;
+	-ms-user-select: none;
+	white-space: nowrap;
 }
 
 [type="checkbox"].filled-in:checked+label:before {

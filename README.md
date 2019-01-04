@@ -9,6 +9,8 @@ The CloudFlare purge plugin uses the CloudFlare API to purge any page of a websi
 
 #Changeset
 
+v1.5.1: Added a new feature for managing CloudFlare DEV mode for your domains
+
 v1.5.0: Added support for Mozilla Firefox
 
 v1.4.3: Masked the API key input. Fixed issues with the parsing of second level domains in the URL.
@@ -46,7 +48,7 @@ If you have ideas and suggestions about this project you can post them on the CF
 All pull requests will be reviewed and put in the following releases.
 
 #Licensing information
-Copyright 2016 Tosho Toshev
+Copyright 2018 Tosho Toshev
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

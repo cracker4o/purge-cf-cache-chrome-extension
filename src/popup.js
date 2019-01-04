@@ -19,13 +19,17 @@
 		promptElement: null,
 		settings: null,
 		settingsSet: false,
+		defaultPromptText: "Purge entire cache?",
 
 		init: function () {
 			var owner = this;
 
 			$("#purgeButton").hide();
 			$("#purgeAllButton").hide();
+			$(".dev-mode-wrapper").hide();
 			$("#optionsButton").show();
+			$("#prompt-text").text(this.defaultPromptText);
+
 			this.promptElement = $("#lightbox");
 
 			$("#purgeAllButton").on("click", function (e) {
@@ -41,6 +45,12 @@
 			$("#optionsButton").on("click", function (e) {
 				e.preventDefault();
 				chrome.tabs.create({'url': "/options.html" } );
+			});
+
+			$("#dev-mode").on("change", function (e) {
+				e.preventDefault();
+				var devModeEnabled = $("#dev-mode").is(":checked");
+				owner.toggleDeveloperMode(devModeEnabled);
 			});
 
 			var setSettings = function (settings) {
@@ -62,6 +72,26 @@
 					}
 
 					$("#optionsButton").hide();
+
+					if (owner.settings.showDevMode === true) {
+						owner.getCurrentTab(function (tab) {
+							var domain = cloudflare.helpers.getDomain(owner.currentUrl);
+							cloudflare.api.getZoneId(
+											domain,
+											owner.settings.email,
+											owner.settings.key,
+											function(zoneId) {
+												cloudflare.api.getZoneDevelopmentMode(zoneId,
+													owner.settings.email,
+													owner.settings.key,
+													function(devModeEnabled) {
+														$(".dev-mode-wrapper").show();
+														$("#dev-mode").prop("checked", devModeEnabled);
+													});
+
+											});
+						});
+					}
 				}
 			};
 
@@ -71,7 +101,8 @@
 					key: null,
 					email: null,
 					refresh: null,
-					hidePurgeAll: false
+					hidePurgeAll: false,
+					showDevMode: false
 				}).then(setSettings);				
 			} else {
 				chrome.storage.sync.get({
@@ -79,7 +110,8 @@
 					key: null,
 					email: null,
 					refresh: null,
-					hidePurgeAll: false
+					hidePurgeAll: false,
+					showDevMode: false
 				}, setSettings);
 			}
 		},
@@ -142,7 +174,6 @@
 		purgeBtnClick: function () {
 			var owner = this;
 			this.getCurrentTab(function (tab) {
-				var regex = /^[a-zA-Z0-9]*\./i;
 				var domain = cloudflare.helpers.getDomain(owner.currentUrl);
 				cloudflare.api.getZoneId(
 								domain, 
@@ -177,7 +208,11 @@
 
 		//Purge entire cache
 		
-		promptNoClick: function () {
+		promptNoClick: function (noAction) {
+			if (typeof noAction === "function") {
+				noAction();
+			}
+
 			this.promptElement.removeClass("active");
 		},
 
@@ -188,7 +223,12 @@
 			}
 		},
 
-		showPrompt: function (domain, yesAction) {
+		showPrompt: function (domain, yesAction, noAction, message) {
+			if (message) {
+				$("#prompt-text").text(message);
+			} else {
+				$("#prompt-text").text(this.defaultPromptText);
+			}
 			this.promptElement.addClass("active");
 			var owner = this;
 
@@ -199,19 +239,61 @@
 
 			$("#promptNo").on("click", function (e) {
 				e.preventDefault();
-				owner.promptNoClick();
+				owner.promptNoClick(noAction);
 			});
 		},
 
 		purgeAllBtnClick: function () {
 			var owner = this;
 			this.getCurrentTab(function (tab) {
-				var regex = /^[a-zA-Z0-9]*\./i;
 				var domain = cloudflare.helpers.getDomain(owner.currentUrl);
 				owner.showPrompt(domain, function(domain) {
 					owner.purgeEntireCloudflareCache(domain); 
 				});
 			});
+		},
+
+		toggleDeveloperMode: function(toggle) {
+			var owner = this;
+			this.getCurrentTab(function (tab) {
+				var domain = cloudflare.helpers.getDomain(owner.currentUrl);
+				owner.showPrompt(domain, function(domain) {
+					owner.developerModeApiCall(domain, toggle); 
+				}, function() {
+					var domain = cloudflare.helpers.getDomain(owner.currentUrl);
+							cloudflare.api.getZoneId(
+											domain,
+											owner.settings.email,
+											owner.settings.key,
+											function(zoneId) {
+												cloudflare.api.getZoneDevelopmentMode(zoneId,
+													owner.settings.email,
+													owner.settings.key,
+													function(devModeEnabled) {
+														$("#dev-mode").prop("checked", devModeEnabled);
+													});
+
+											});
+				}, "Are you sure?");
+			})
+		},
+
+		developerModeApiCall: function(domain, isEnabled) {
+			var owner = this;
+			cloudflare.api.getZoneId(
+				domain,
+				owner.settings.email,
+				owner.settings.key,
+				function(zoneId) {
+					cloudflare.api.setZoneDevelopmentMode(isEnabled, 
+						zoneId, 
+						owner.settings.email, 
+						owner.settings.key,
+						function(result) {
+							$("#dev-mode").prop("checked", result);
+						});
+				}
+			)
 		},
 
 		purgeEntireCloudflareCache: function (domain) {

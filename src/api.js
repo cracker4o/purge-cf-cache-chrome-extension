@@ -42,9 +42,13 @@ var cloudflare = {
                         successCallback(data.result[0].id);
                         return;
                     }
-                    failureCallback("Unable to get the zone ID.");
+                    if (failureCallback) {
+                        failureCallback("Unable to get the zone ID.");
+                    }
                 }).fail(function(err) {
-                    failureCallback(owner.parseError(err));
+                    if (failureCallback) {
+                        failureCallback(owner.parseError(err));
+                    }
                 });
         },
 
@@ -71,6 +75,56 @@ var cloudflare = {
                 }).fail(function(err) {
                     failureCallback(owner.parseError(err));
                 });
+        },
+
+        getZoneDevelopmentMode: function(zoneId, email, key, successCallback, failureCallback) {
+            var owner = this;
+            $.ajax({
+                url: owner.baseApiUrl + "zones/" + zoneId + "/settings/development_mode",
+                method: 'GET',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('x-auth-Email', email);
+                    xhr.setRequestHeader('x-auth-key', key);
+                },
+                crossDomain: true,
+                contentType: "application/json",
+                dataType: "json"
+            })
+                .done(function(data) {
+                    if (data.success == true && data.result) {
+                        var result = data.result.value !== "off" ? true : false;
+                        successCallback(result);
+                    }
+                }).fail(function(err) {
+                    failureCallback(owner.parseError(err));
+                });
+        },
+
+        setZoneDevelopmentMode: function(toggle, zoneId, email, key, successCallback, failureCallback) {
+            var owner = this;
+            var val = toggle ? "on" : "off";
+            $.ajax({
+                url: owner.baseApiUrl + "zones/" + zoneId + "/settings/development_mode",
+                method: "PATCH",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('x-auth-Email', email);
+                    xhr.setRequestHeader('x-auth-key', key);
+                },
+                data: JSON.stringify({
+                    value: val
+                }),
+                crossDomain: true,
+                contentType: "application/json",
+                dataType: "json"
+            })
+                .done(function(data) {
+                    if (data.success == true && data.result) {
+                        var result = data.result.value !== "off" ? true : false;
+                        successCallback(result);
+                    }
+                }).fail(function(err) {
+                    failureCallback(owner.parseError(err));
+                })
         }
     },
     helpers: {

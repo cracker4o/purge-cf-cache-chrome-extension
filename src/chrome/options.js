@@ -18,7 +18,9 @@
                tag: "options",
                key: null,
                email: null,
-               refresh: null
+               refresh: null,
+               hidePurgeAll: false,
+               showDevMode: false
            },
            
            init: function() {
@@ -41,6 +43,11 @@
                    e.preventDefault();
                    chrome.tabs.create({'url': "/options.html" } )
                });
+
+               $("#show-dev-mode").on("change", function(e) {
+                   e.preventDefault();
+                   owner.saveClick();
+               });
                
                this.restoreOptions();
            },
@@ -60,6 +67,7 @@
                var email = $("#email").val();
                var refresh = $("#refresh").val();
                var hidePurgeAll = $("#hide-purge-all").is(":checked");
+               var showDevMode = $("#show-dev-mode").is(":checked");
                
                if(key === "" || email ==="" || refresh ==="") {
                    return;
@@ -69,7 +77,8 @@
                  key: key,
                  email: email,
                  refresh: refresh, 
-                 hidePurgeAll: hidePurgeAll
+                 hidePurgeAll: hidePurgeAll,
+                 showDevMode: showDevMode
                };
                
                chrome.storage.sync.set(this.settings, function() {
@@ -137,6 +146,7 @@
                    $("#key").val(items.key);
                    $("#email").val(items.email);
                    $("#hide-purge-all").prop("checked", items.hidePurgeAll);
+                   $("#show-dev-mode").prop("checked", items.showDevMode);
 
                    if(items.refresh != null && items.refresh !== undefined) {
                        $("#refresh").val(items.refresh);    
