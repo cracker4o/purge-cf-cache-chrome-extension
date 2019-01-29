@@ -25,6 +25,10 @@ h2 {
 
 }
 
+.hide {
+	display: none;
+}
+
 .clear {
 	clear: both;
 }

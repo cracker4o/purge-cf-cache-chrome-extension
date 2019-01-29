@@ -1,0 +1,19 @@
+{
+  "name": "purge-cf-cache-chrome-extension",
+  "version": "1.0.0",
+  "description": "Welcome to the CloudFlare Purge Plugin repository.\r CF-Purge is a chrome extension that purges the cache for the current URL on CloudFlare enabled websites.\r You can find the Chrome extension [here](https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cracker4o/purge-cf-cache-chrome-extension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cracker4o/purge-cf-cache-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/cracker4o/purge-cf-cache-chrome-extension#readme"
+}
