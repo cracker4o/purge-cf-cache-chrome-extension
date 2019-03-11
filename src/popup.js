@@ -44,6 +44,7 @@ export default class PopUp {
         this.elements.prompText.innerHTML = this.defaultPromptText;
         this.elements.purgeAllButton.addEventListener('click', this.purgeAllClick.bind(this));
         this.elements.purgeButton.addEventListener('click', this.purgeButtonClick.bind(this));
+        this.loadSettings();
     }
 
     async loadSettings() {
@@ -74,12 +75,12 @@ export default class PopUp {
 
     async setup(settings) {
         this.settings = settings;
-        owner.settingsSet = true;
-        if (!this.settings.email || this.settings.email === '') {
+        this.settingsSet = true;
+        if (!this.settings.email) {
             this.settingsSet = false;
         }
 
-        if (!this.settings.refresh || this.settings.refesh === '') {
+        if (!this.settings.refresh) {
             this.settings.refresh = 10;
         }
 
@@ -93,8 +94,7 @@ export default class PopUp {
             }
 
             if (this.settings.showDevMode) {
-                const tab = await this.utility.getCurrentTab();
-                const domain = await this.utility.getDomain(tab.url);
+                const domain = await this.getCurrentDomain();
                 const zoneId = await this.api.getZoneId(domain);
                 const zoneDevelopmentMode = await this.api.getZoneDevelopmentMode(zoneId);
                 if (zoneDevelopmentMode) {
@@ -107,15 +107,28 @@ export default class PopUp {
 
     async purgeButtonClick(e) {
         e.preventDefault();
+        const tab = await this.utility.getCurrentTab();
+        if (tab && tab.url) {
+            const domain = await this.getCurrentDomain();
+            const zoneId = await this.api.getZoneId(domain);
+            this.api.purgeCache({ files: [tab.url] }, zoneId);
+        }
     }
 
     async purgeAllClick(e) {
         e.preventDefault();
+        const domain = await this.getCurrentDomain();
+        this.purgeEntireCache(domain);
+    }
+
+    async getCurrentDomain() {
         const tab = await this.utility.getCurrentTab();
         if (tab && tab.url) {
             const domain = await this.utility.getDomain(tab.url);
-            this.purgeEntireCache(domain);
+            return domain;
         }
+
+        return '';
     }
 
     hideElement(element) {

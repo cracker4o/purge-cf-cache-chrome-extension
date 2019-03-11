@@ -32,7 +32,8 @@ export default class CloudFlareApi {
      */
     async getZoneId(domain) {
         const url = `${this.cloudFlareApiUrl}zones?name=${domain}&status=active`;
-        const data = await fetch(url,
+        const data = await fetch(
+            url,
             {
                 method: 'GET',
                 headers: {
@@ -40,8 +41,9 @@ export default class CloudFlareApi {
                     'x-auth-Email': this.email,
                     'x-auth-key': this.key,
                 },
-            }).json();
-        
+            },
+        ).json();
+
         if (data.success && data.result[0]) {
             return data.result[0].id;
         }
