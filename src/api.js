@@ -32,7 +32,7 @@ export default class CloudFlareApi {
      */
     async getZoneId(domain) {
         const url = `${this.cloudFlareApiUrl}zones?name=${domain}&status=active`;
-        const data = await fetch(
+        const result = await fetch(
             url,
             {
                 method: 'GET',
@@ -42,10 +42,13 @@ export default class CloudFlareApi {
                     'x-auth-key': this.key,
                 },
             },
-        ).json();
+        );
 
-        if (data.success && data.result[0]) {
-            return data.result[0].id;
+        if (result && result.ok) {
+            const data = await result.json();
+            if (data.result.length > 0) {
+                return data.result[0].id;
+            }
         }
 
         throw new Error('Unable to get the zone ID.');
@@ -54,27 +57,30 @@ export default class CloudFlareApi {
     /**
      * Purges the CloudFlare cache for a particular domain for a provided set of urls.
      * @see https://api.cloudflare.com/#zone-purge-files-by-url 
-     * @param {Object} files an array of urls to purge
+     * @param {Object} purgeSettings an array of urls to purge
      * @param {String} zoneId the zone ID of the domain
      */
-    async purgeCache(files, zoneId) {
-        if (!files) {
-            throw new Error('No files for purging.')
+    async purgeCache(purgeSettings, zoneId) {
+        if (!purgeSettings) {
+            throw new Error('No files for purging.');
         }
 
         const url = `${this.cloudFlareApiUrl}/zones/${zoneId}/purge_cache`;
-        const data = await fetch(url, {
+        const result = await fetch(url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'x-auth-Email': this.email,
                 'x-auth-key': this.key,
             },
-            body: JSON.stringify(files),
-        }).json();
+            body: JSON.stringify(purgeSettings),
+        });
 
-        if (data.success && data.result) {
-            return data.result;
+        if (result && result.ok) {
+            const data = await result.json();
+            if (data.success) {
+                return data.result.id;
+            }
         }
 
         throw new Error('Purge failed.');
@@ -87,16 +93,17 @@ export default class CloudFlareApi {
      */
     async getZoneDevelopmentMode(zoneId) {
         const url = `${this.cloudFlareApiUrl}/zones/${zoneId}/settings/development_mode`;
-        const data = await fetch(url, {
+        const result = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'x-auth-Email': this.email,
                 'x-auth-key': this.key,
             },
-        }).json();
+        });
 
-        if (data.success && data.result) {
+        if (result && result.ok) {
+            const data = await result.json();
             return data.result.value === 'on';
         }
 
@@ -113,7 +120,7 @@ export default class CloudFlareApi {
 
         const url = `${this.cloudFlareApiUrl}/zones/${zoneId}/settings/development_mode`;
         const val = developmentModeState ? 'on' : 'off';
-        const data = await fetch(url, {
+        const result = await fetch(url, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,7 +132,8 @@ export default class CloudFlareApi {
             }),
         }).json();
 
-        if (data.success && data.result) {
+        if (result && result.ok) {
+            const data = await result.json();
             return data.result.value === 'on';
         }
 

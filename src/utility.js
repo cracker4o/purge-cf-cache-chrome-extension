@@ -8260,10 +8260,14 @@ export default class Utility {
             'ybo.trade': true,
             'za.net': true,
             'za.org': true,
-            'now.sh': true
+            'now.sh': true,
         };
     }
 
+    /**
+     * Gets the domain part from an URL
+     * @param {*} url an URL
+     */
     getDomain(url) {
         const uri = new URL(url);
         const domain = uri.hostname;
@@ -8276,13 +8280,17 @@ export default class Utility {
             result = domain.replace(domain.match(regex)[0], '');
         }
 
-        if (this.topLevelDomains[result] == true) {
+        if (this.topLevelDomains[result] === true) {
             return this.getDomain(`http://www.${domain}`);
         }
 
         return result;
     }
 
+    /**
+     * Parses an error response coming from the CloudFlare API
+     * @param {*} errorResponse the error response object
+     */
     parseCloudFlareErrorResponse(errorResponse) {
         let errorMessage = '';
         const json = errorResponse.responseJSON;
@@ -8295,8 +8303,16 @@ export default class Utility {
         return errorMessage;
     }
 
+    /**
+     * Gets the active browser tab
+     */
     getCurrentTab() {
         return new Promise((resolve) => {
+            const isFirefox = typeof InstallTrigger !== 'undefined';
+            if (isFirefox) {
+                chrome = browser;
+            }
+
             chrome.tabs.query({
                 active: true,
                 currentWindow: true,
@@ -8306,8 +8322,15 @@ export default class Utility {
         });
     }
 
+    /**
+     * Sets a status message inside an Extension element.
+     * @param {*} element a DOM element
+     * @param {*} message the status message
+     * @param {*} timeout a timeout in milliseconds for the message
+     * @param {*} customHtml if custom HTML is needed to be nested into the element.
+     */
     setStatusMessage(element, message, timeout, customHtml) {
-        const elem = document.querySelector(element);
+        const elem = element;
         elem.innerText = message;
         elem.style.cursor = 'pointer';
         element.addEventListener('click', (e) => {
@@ -8323,5 +8346,31 @@ export default class Utility {
         setTimeout(() => {
             targetElement.innerText = '';
         }, timeout);
+    }
+
+    /**
+     * A helper method for an easier XHR requst
+     * @param {*} url the destination URL
+     * @param {*} method the HTTP method - GET, POST, PATCH, PUT, DELETE, OPTIONS ...
+     */
+    makeRequest(url, method) {
+        const request = new XMLHttpRequest();
+
+        return new Promise((resolve, reject) => {
+            request.onreadystatechange = () => {
+                if (request.readyState !== 4) return;
+                if (request.status >= 200 && request.status < 300) {
+                    resolve(request);
+                } else {
+                    reject(new Error({
+                        status: request.status,
+                        statusText: request.statusText,
+                    }));
+                }
+            };
+
+            request.open(method || 'GET', url, true);
+            request.send();
+        });
     }
 }

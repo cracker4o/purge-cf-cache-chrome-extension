@@ -3,8 +3,6 @@
 
 <head>
   <title>Purge CloudFlare</title>
-  <meta charset="utf-8"/>
-  <script src="jquery-3.1.1.min.js"></script>
   <link href="main.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -34,20 +32,20 @@
       <div class="right-part">
           <input class="filled-in" type="checkbox" id="hide-purge-all" />
           <label for="hide-purge-all">
-        </label>
+          </label>
       </div>
       <div class="clear"></div>
       <div class="left-part">
+        <label for="show-dev-mode">
+          Show DEV mode:
+        </label>
+      </div>
+      <div class="right-part">
+          <input class="filled-in" type="checkbox" id="show-dev-mode" />
           <label for="show-dev-mode">
-            Show DEV mode:
           </label>
-        </div>
-        <div class="right-part">
-            <input class="filled-in" type="checkbox" id="show-dev-mode" />
-            <label for="show-dev-mode">
-            </label>
-        </div>
-        <div class="clear"></div>      
+      </div>
+      <div class="clear"></div>
     </div>
     <div class="field">
       <div class="left-part">
@@ -88,8 +86,7 @@
     <div id="purge-status"></div>
   </div>
 
-  <script src="api.js"></script>
-  <script src="options.js"></script>
+  <script type="module" src="options.js"></script>
 </body>
 
 </html>
