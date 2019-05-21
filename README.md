@@ -9,6 +9,8 @@ The CloudFlare purge plugin uses the CloudFlare API to purge any page of a websi
 
 #Changeset
 
+v1.6.0 Code refactoring for the whole project. Better readability cleanly written and using the latest trends in JavaScript development.
+
 v1.5.1: Added a new feature for managing CloudFlare DEV mode for your domains
 
 v1.5.0: Added support for Mozilla Firefox

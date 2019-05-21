@@ -64,6 +64,9 @@ class PopUp {
         return new PopUp();
     }
 
+    /**
+     * Loads the extension settings from the browser storage.
+     */
     async loadSettings() {
         if (!chrome.storage) {
             const settings = await browser.storage.sync.get({
@@ -90,6 +93,10 @@ class PopUp {
         });
     }
 
+    /**
+     * Initializes the main extension page.
+     * @param {*} settings The extension settings that are preserved in the browser storage.
+     */
     async setup(settings) {
         this.settings = settings;
         this.settingsSet = true;
@@ -128,6 +135,10 @@ class PopUp {
         }
     }
 
+    /**
+     * A click handler for the purge button.
+     * @param {*} e event handler object
+     */
     async purgeButtonClick(e) {
         e.preventDefault();
         const tab = await this.utility.getCurrentTab();
@@ -153,6 +164,10 @@ class PopUp {
         }
     }
 
+    /**
+     * A click handler for the purge all button.
+     * @param {*} e event handler object
+     */
     async purgeAllClick(e) {
         e.preventDefault();
         const currentDomain = await this.getCurrentDomain();
@@ -181,11 +196,18 @@ class PopUp {
         }
     }
 
+    /**
+     * A click handler that opens the extension options screen.
+     * @param {*} e event handler object
+     */
     optionsButtonClick(e) {
         e.preventDefault();
         chrome.tabs.create({ url: '/options.html' });
     }
 
+    /**
+     * Gets the domain of the currently opened tab.
+     */
     async getCurrentDomain() {
         const tab = await this.utility.getCurrentTab();
         if (tab && tab.url) {
@@ -196,18 +218,29 @@ class PopUp {
         return '';
     }
 
+    /**
+     * Hides a DOM element
+     * @param {*} element a DOM element
+     */
     hideElement(element) {
         if (element) {
             element.classList.add('hide');
         }
     }
 
+    /**
+     * Shows a DOM element
+     * @param {*} element a DOM element
+     */
     showElement(element) {
         if (element) {
             element.classList.remove('hide');
         }
     }
 
+    /**
+     * A success event handler for the purge operation.
+     */
     async onPurgeSuccess() {
         this.elements.purgeButton.className = '';
         this.elements.status.classList.add('success');
@@ -224,6 +257,12 @@ class PopUp {
         }
     }
 
+    /**
+     * A countdown timer that counts to a certain timeout and refreshes the current page.
+     * @param {*} element - the element that holds the counter.
+     * @param {*} message - A message that displays next to the countdown.
+     * @param {*} refreshTimeout - a timeout in seconds.
+     */
     refreshCountdown(element, message, refreshTimeout) {
         const countDownElement = element;
         let countdown = refreshTimeout;
@@ -241,6 +280,13 @@ class PopUp {
         });
     }
 
+    /**
+     * Shows a lightbox with a yes and no buttons
+     * @param {*} domain a domain string
+     * @param {*} yesAction an event handler for the yes button
+     * @param {*} noAction an event handler for the no button
+     * @param {*} message a prompt message
+     */
     showPrompt(domain, yesAction, noAction, message) {
         if (message) {
             this.elements.prompText.innerHTML = message;
@@ -271,6 +317,12 @@ class PopUp {
         this.elements.promptNo.addEventListener('click', onNoAction);
     }
 
+    /**
+     * An event handler for toggling the developer mode setting in CloudFlare.
+     * @param {*} toggle a boolean value
+     * true = developer mode enabled
+     * fals = developer mode disabled
+     */
     async toggleDeveloperMode(toggle) {
         const domain = await this.getCurrentDomain();
         try {

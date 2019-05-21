@@ -27,7 +27,7 @@ export default class PurgeInfo {
         this.utility = new Utility();
 
         /**
-         * A hash map with Airport codes and Airport names for Cloudflare
+         * A hash map with Airport codes and Airport names for the Cloudflare edge nodes.
          */
         this.airports = {
             AKL: 'Auckland, NZ',

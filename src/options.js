@@ -58,6 +58,9 @@ class Options {
         return new Options();
     }
 
+    /**
+     * Syncs the options from the chrome sync storage.
+     */
     restoreOptions() {
         chrome.storage.sync.get(this.settings, (items) => {
             this.elements.keyBox.value = items.key;
@@ -81,6 +84,9 @@ class Options {
         });
     }
 
+    /**
+     * Saves the current options
+     */
     saveClick() {
         const key = this.elements.keyBox.value;
         const email = this.elements.emailBox.value;
@@ -116,6 +122,9 @@ class Options {
         });
     }
 
+    /**
+     * Purges a set of URLs under the same domain
+     */
     async customPurge() {
         let url = this.elements.customUrl.value;
         let domain = '';
