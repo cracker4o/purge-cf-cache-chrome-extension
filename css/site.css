@@ -21,6 +21,24 @@ h2,h3,h4 {
     letter-spacing: -0.045em;
 }
 
+.privacy-policy {
+    background-color: #FDB632;
+    color: #027878;
+    font-weight: 500;
+}
+
+.privacy-policy h1 {
+    text-shadow: none;
+}
+
+.privacy-policy a {
+    color: #801638;
+}
+
+.privacy-policy a:hover {
+    color: #C22326;
+}
+
 /* MOBILE */
 @media only screen and (min-width:10px) {
     .github-link {
