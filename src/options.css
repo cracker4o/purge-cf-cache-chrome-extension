@@ -1,0 +1,23 @@
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.container .group {
+    margin: 20px auto;
+    background-color: #2C2F33;
+    box-shadow: 12px 12px 4px -12px rgba(0,0,0,0.5);
+}
+
+.container .group .group-title {
+    background-color: #4f5358;
+    padding: 10px 30px
+}
+
+.container .group .group-title > h3 {
+    text-transform: uppercase;
+}
+
+.container .group .group-body {
+    padding: 30px 30px 30px 30px;
+}

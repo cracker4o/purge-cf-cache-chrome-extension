@@ -1,38 +1,81 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Purge CloudFlare</title>
-    <link href="main.css" rel="stylesheet" type="text/css"/>
-  </head>
-  <body>
-    <div class="holder">
-      <div id="lightbox" class="prompt">
-        <div class="field text-center" id="prompt-text">
+
+<head>
+  <meta name="viewport" content="width=device-width">
+  <title>Purge CloudFlare</title>
+  <link href="base.css" rel="stylesheet" type="text/css" />
+  <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="holder">
+    <div id="lightbox" class="prompt">
+      <div class="field text-center" id="prompt-text">
+      </div>
+      <div class="field">
+        <div class="text-center">
+            <button id="promptYes" class="warning">Yes</button>
+            <button id="promptNo">No</button>
         </div>
-        
-        <button id="promptYes">Yes</button>
-        <button id="promptNo">No</button>
       </div>
-      <h2>CF-PURGE</h2>
-      <div class="field text-center">
-        <input id="refresh" class="filled-in" type="checkbox" checked value="false" />
-        <label for="refresh">Refresh</label>
-      </div>
-      <div class="field text-center dev-mode-wrapper">
-        <input id="dev-mode" class="filled-in" type="checkbox" />
-        <label for="dev-mode">DEV mode</label>
-      </div>
-      <button class="button-group" id="optionsButton">Configure plugin</button>
-      <button class="button-group warning" id="purgeAllButton">Purge Entire Cache</button>
-      <button class="button-group" id="purgeButton">Purge current page</button>
-      <div id="status"></div>
-      <div id="sub-status"></div>
-      <div id="details"></div>   
-      <div id="infoBtn">
-          <img src="infoIcon.png" alt="info" title="Current page - cache status" />
-      </div>  
     </div>
-    <script type="module" src="popup.js">
-    </script>
-  </body>
+
+    <div class="group">
+      <div class="group-title">
+        <img class="logo" src="\images\logo.png"/>
+        <h3>CloudFlare Purge</h3>
+      </div>
+      <div class="group-body">
+        <div class="field">
+          <button id="infoBtn">
+              <img src="infoIcon.png" alt="info" title="Current page - cache status" />
+              <span>
+                  Show CloudFlare CDN page info
+              </span>
+          </button>
+        </div>
+        <div class="dev-mode-wrapper">
+            <div class="field">
+              <div class="left-part checkbox-label">
+                  Developer mode:
+              </div>
+              <div class="right-part">
+                  <label class="dev-mode-checkbox styled-checkbox">
+                      <input id="dev-mode" type="checkbox" />
+                      <span class="styled-checkbox-check-mark"></span>
+                  </label>
+              </div>
+            </div>
+        </div>
+        <div class="field refresh-checkbox">
+            <div class="left-part checkbox-label">Page refresh timeout:</div>
+            <div class="right-part">
+                <label class="styled-checkbox">
+                    <input type="checkbox" id="refresh" checked value="false" />
+                    <span class="styled-checkbox-check-mark"></span>
+                </label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="left-part">
+                <button id="purgeButton">Purge current page</button>
+            </div>
+            <div class="right-part">
+                <button class="warning" id="purgeAllButton">Purge Everything</button>
+            </div>
+        </div>
+
+        <button id="optionsButton">Configure plugin</button>
+        
+        <div id="status" class="info"></div>
+        <div id="sub-status"></div>
+        <div id="details"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="popup.js">
+  </script>
+</body>
+
 </html>

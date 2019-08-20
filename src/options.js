@@ -35,6 +35,7 @@ class Options {
             refreshBox: document.querySelector('#refresh'),
             customPurgeGroup: document.querySelector('#custom-purge-group'),
             statusField: document.querySelector('#status'),
+            errorField: document.querySelector('#error-status'),
             customUrl: document.querySelector('#custom-url'),
             purgeStatus: document.querySelector('#purge-status'),
         };
@@ -59,10 +60,10 @@ class Options {
     }
 
     /**
-     * Syncs the options from the chrome sync storage.
+     * Syncs the options from the chrome local storage.
      */
     restoreOptions() {
-        chrome.storage.sync.get(this.settings, (items) => {
+        chrome.storage.local.get(this.settings, (items) => {
             this.elements.keyBox.value = items.key;
             this.elements.emailBox.value = items.email;
             this.elements.hidePurgeAllCheckbox.checked = items.hidePurgeAll;
@@ -94,7 +95,14 @@ class Options {
         const hidePurgeAll = this.elements.hidePurgeAllCheckbox.checked;
         const showDevMode = this.elements.showDevModeCheckbox.checked;
 
+        this.elements.errorField.innerHTML = '';
+
         if (key === '' || email === '' || refresh === '') {
+            let validationMessage = 'The following fields are required:';
+            validationMessage += !key ? '<p>Api Key</p>' : '';
+            validationMessage += !email ? '<p>E-mail</p>' : '';
+            validationMessage += !refresh ? '<p>Refresh Timeout</p>' : '';
+            this.elements.errorField.innerHTML = validationMessage;
             return;
         }
 
@@ -107,15 +115,14 @@ class Options {
             showDevMode,
         };
 
-        chrome.storage.sync.set(this.settings, () => {
+        chrome.storage.local.set(this.settings, () => {
             this.elements.statusField.innerHTML = 'Options saved.';
-
             if (this.elements.keyBox.value !== '' && this.elements.emailBox.value !== '') {
                 this.elements.customPurgeGroup.classList.remove('hide');
             } else {
                 this.elements.customPurgeGroup.classList.add('hide');
             }
-
+            this.restoreOptions();
             setTimeout(() => {
                 this.elements.statusField.innerHTML = '';
             }, 1500);

@@ -164,7 +164,7 @@ export default class PurgeInfo {
                 const cacheControl = response.getResponseHeader('cache-control');
 
                 if (cfRay == null && cacheStatus == null) {
-                    this.elements.purgeButton.className = '';
+                    // this.elements.purgeButton.className = '';
                     this.elements.status.classList.add('error');
                     this.utility.setStatusMessage(document.querySelector('#status'), 'NO INFO AVAILABLE', 3000);
                     return;
@@ -181,12 +181,12 @@ export default class PurgeInfo {
                     this.elements.details.classList.add('active');
                     this.elements.details.innerHTML = `Node location ${this.stats.serverLocation}<br/>`;
                     this.elements.details.innerHTML += `Ray: ${this.stats.ray}<br/>`;
-                    this.elements.details.innerHTML += `Status: ${this.stats.status}<br/>`;
+                    this.elements.details.innerHTML += `Status: <strong>${this.stats.status}</strong><br/>`;
                     this.elements.details.innerHTML += `Cache control: ${this.stats.cacheControl}<br/>`;
                 }
             }
         } catch (ex) {
-            this.elements.purgeButton.className = '';
+            // this.elements.purgeButton.className = '';
             this.elements.status.classList.add('error');
             this.utility.setStatusMessage(document.querySelector('#status'), 'NO INFO AVAILABLE', 3000);
         }

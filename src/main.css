@@ -1,110 +1,20 @@
-html {
-	height: 100%;
-}
-
 body {
-	background-color: white;
-	font-family: "Open Sans",sans-serif;
-	color:white;
-	text-align: center;
-	font-size: 16px;
-	background: linear-gradient(to bottom left,#85cba8,#76c4e2) no-repeat;
-	background-position: center;
-	background-size: cover;
-	min-width: 210px;
+    min-width: 375px;
+    min-height: 350px;
+    margin: 0;
 }
 
-h2 {
-	/*font-size: 1.1em;*/
-	font-weight: normal;
-	text-transform: uppercase;
-	font-family: 'Open Sans', sans-serif; 
-	font-size: 20px; 
-	font-weight: 300; 
-	line-height: 32px;
-
+.group .group-title {
+    background-color: #4f5358;
+    padding: 10px 30px
 }
 
-.hide {
-	display: none;
+.group .group-body {
+    padding: 30px;
 }
 
-.clear {
-	clear: both;
-}
-
-button {
-	background-color: #f69259;
-	color:white;
-	font-size: 14px;
-	font-weight: 400;
-	padding: 10px 30px;
-	border-radius: 5px;
-	border: none;
-	cursor: pointer;
-	text-transform: capitalize;
-	transition: all .3s ease 0s;
+.prompt.active {
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-button:hover {
-	background-color: #f37229;
-	outline: 0;
-}
-
-.success {
-	margin:5px;
-	font-weight: bold;
-	font-size: 1.0em;
-}
-
-.error {
-	color:red;
-	margin:5px;
-	font-weight: bold;
-	font-size: 1.0em;	
-}
-
-.button-group {
-	margin-top: 4px;
-	margin-bottom: 4px;
-}
-
-.field {
-	margin: 10px 4px;
-}
-
-.field label {
-	width: 7em;
-	display: inline-block;
-	text-align: right;
-	line-height: 30px;
-    margin-right: 10px;
-}
-
-.field.text-center label {
-	text-align: center;
-	width: 4.2em;
-}
-
-.field input[type=checkbox] {
-	padding: 5px;
-}
-
-.field input[type=text], .field input[type=password] {
-	width: 200px;
-	padding: 5px;
-	border: 2px solid white;
-	border-radius: 6px;
-}
-
-.group {
-	margin: 0.5em;
-	border: 2px solid white;
-	border-radius: 6px;
-	padding: 10px;
 }
 
 .prompt {
@@ -115,124 +25,36 @@ button:hover {
 	width: 100%;
 	height: 100%;
 	z-index: 10;
-	background: linear-gradient(to bottom left,#85cba8,#76c4e2) no-repeat;
-}
-.prompt button {
-	margin-top: 10px;
 }
 
-#infoBtn {
-    position:absolute;
-    top:4px;
-    left:4px;
-    cursor: pointer;
+.logo {
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
 }
 
-#infoBtn > img {
-    width: 20px;
-    height: 20px;
-}
-
-#details {
-    display: none;
-}
-
-#details.active {
+#optionsButton {
+    margin: auto;
     display: block;
-    font-weight: bold;
-    margin-top: 5px;
-    text-align: left;
-    width: 220px;
 }
 
-.prompt.active {
-	display: block;
-}
-
-.left-part {
-	width: 50%;
-	text-align: right;
-	float:left;
-}
-
-.right-part {
-	width: 50%;
-	text-align: left;
-	float:left;
-}
-
-.warning {
-	background-color: #bf360c;
-}
-
-#custom-url {
-	width:350px;
-	height:80px;
-	border-radius: 6px;
-}
-
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-	position: absolute;
-    left: -9999px;
-    opacity: 0;
-}
-
-input[type="checkbox"] {
-    box-sizing: border-box;
-    padding: 0;
-}
-
-[type="checkbox"]+label {
-	position: relative;
-    padding-left: 35px;
-    cursor: pointer;
-    display: inline-block;
-    height: 25px;
+#infoBtn span {
     line-height: 25px;
-    font-size: 1rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-	-ms-user-select: none;
-	white-space: nowrap;
 }
 
-[type="checkbox"].filled-in:checked+label:before {
-	top: 0;
-    left: 1px;
-    width: 8px;
-    height: 13px;
-    border-top: 2px solid transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid #fff;
-    border-bottom: 2px solid #fff;
-    -webkit-transform: rotateZ(37deg);
-    transform: rotateZ(37deg);
-    -webkit-transform-origin: 100% 100%;
-    transform-origin: 100% 100%;
-    transition: transform 0.25s ease 0s;
+#infoBtn img {
+    height: 25px;
+    width: 25px;
+    vertical-align: bottom;
+    margin-right: 25px;
 }
 
-[type="checkbox"].filled-in+label:before, 
-[type="checkbox"].filled-in+label:after {
-	content: '';
-    left: 0;
-    position: absolute;
-    transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
-    z-index: 1;
-    transition: transform 0.25s ease 0s;
+#lightbox {
+    background-color: #23272A;
 }
 
-[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
-	content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 18px;
-    height: 18px;
-    z-index: 0;
-    border: 2px solid white;
-    border-radius: 1px;
-    margin-top: 2px;
-    transition: .2s;	
+#details:not(:empty) {
+    background-color: #af661a;
+    padding: 20px;
 }

@@ -37,10 +37,12 @@ class PopUp {
             devMode: document.querySelector('#dev-mode'),
             status: document.querySelector('#status'),
             refresh: document.querySelector('#refresh'),
+            refreshCheckbox: document.querySelector('.refresh-checkbox'),
             subStatus: document.querySelector('#sub-status'),
             promptElement: document.querySelector('#lightbox'),
             promptYes: document.querySelector('#promptYes'),
             promptNo: document.querySelector('#promptNo'),
+            infoBtn: document.querySelector('#infoBtn'),
         };
 
         const isFirefox = typeof InstallTrigger !== 'undefined';
@@ -51,6 +53,8 @@ class PopUp {
         this.hideElement(this.elements.purgeButton);
         this.hideElement(this.elements.purgeAllButton);
         this.hideElement(this.elements.devModeWrapper);
+        this.hideElement(this.elements.refreshCheckbox);
+        this.hideElement(this.elements.infoBtn);
         this.showElement(this.elements.optionsButton);
         this.elements.prompText.innerHTML = this.defaultPromptText;
         this.elements.purgeAllButton.addEventListener('click', this.purgeAllClick.bind(this));
@@ -69,7 +73,7 @@ class PopUp {
      */
     async loadSettings() {
         if (!chrome.storage) {
-            const settings = await browser.storage.sync.get({
+            const settings = await browser.storage.local.get({
                 tag: 'options',
                 key: null,
                 email: null,
@@ -81,7 +85,7 @@ class PopUp {
             return;
         }
 
-        chrome.storage.sync.get({
+        chrome.storage.local.get({
             tag: 'options',
             key: null,
             email: null,
@@ -110,7 +114,9 @@ class PopUp {
 
         if (this.settingsSet) {
             this.api = new Api(this.settings.email, this.settings.key);
+            this.showElement(this.elements.refreshCheckbox);
             this.showElement(this.elements.purgeButton);
+            this.showElement(this.elements.infoBtn);
             this.hideElement(this.elements.optionsButton);
 
             if (!this.settings.hidePurgeAll) {
@@ -319,20 +325,21 @@ class PopUp {
 
     /**
      * An event handler for toggling the developer mode setting in CloudFlare.
-     * @param {*} toggle a boolean value
+     * @param {*} developmentModeState a boolean value
      * true = developer mode enabled
      * fals = developer mode disabled
      */
-    async toggleDeveloperMode(toggle) {
+    async toggleDeveloperMode() {
+        const developmentModeState = this.elements.devMode.checked;
         const domain = await this.getCurrentDomain();
         try {
             if (domain) {
                 const zoneId = await this.api.getZoneId(domain);
                 this.showPrompt(domain, () => {
-                    this.api.setZoneDevelopmentMode(zoneId);
+                    this.api.setZoneDevelopmentMode(zoneId, developmentModeState);
                 }, async () => {
                     const zoneDevelopmentMode = await this.api
-                        .getZoneDevelopmentMode(zoneId, toggle);
+                        .getZoneDevelopmentMode(zoneId);
                     this.elements.devMode.checked = zoneDevelopmentMode;
                 }, 'Are you sure?');
             }

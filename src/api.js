@@ -117,7 +117,6 @@ export default class CloudFlareApi {
      * @param {Boolean} developmentModeState
      */
     async setZoneDevelopmentMode(zoneId, developmentModeState) {
-
         const url = `${this.cloudFlareApiUrl}/zones/${zoneId}/settings/development_mode`;
         const val = developmentModeState ? 'on' : 'off';
         const result = await fetch(url, {
@@ -130,7 +129,7 @@ export default class CloudFlareApi {
             body: JSON.stringify({
                 value: val,
             }),
-        }).json();
+        });
 
         if (result && result.ok) {
             const data = await result.json();
