@@ -65,7 +65,7 @@ export default class CloudFlareApi {
             throw new Error('No files for purging.');
         }
 
-        const url = `${this.cloudFlareApiUrl}/zones/${zoneId}/purge_cache`;
+        const url = `${this.cloudFlareApiUrl}zones/${zoneId}/purge_cache`;
         const result = await fetch(url, {
             method: 'DELETE',
             headers: {
@@ -92,7 +92,7 @@ export default class CloudFlareApi {
      * @param {String} zoneId the zone ID
      */
     async getZoneDevelopmentMode(zoneId) {
-        const url = `${this.cloudFlareApiUrl}/zones/${zoneId}/settings/development_mode`;
+        const url = `${this.cloudFlareApiUrl}zones/${zoneId}/settings/development_mode`;
         const result = await fetch(url, {
             method: 'GET',
             headers: {
@@ -117,7 +117,7 @@ export default class CloudFlareApi {
      * @param {Boolean} developmentModeState
      */
     async setZoneDevelopmentMode(zoneId, developmentModeState) {
-        const url = `${this.cloudFlareApiUrl}/zones/${zoneId}/settings/development_mode`;
+        const url = `${this.cloudFlareApiUrl}zones/${zoneId}/settings/development_mode`;
         const val = developmentModeState ? 'on' : 'off';
         const result = await fetch(url, {
             method: 'PATCH',
