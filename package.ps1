@@ -14,8 +14,10 @@ if(Test-Path $destination){
 
 mkdir "$destination"
 mkdir "$destination\temp"
+mkdir "$destination\temp\images"
 
 Copy-Item -path ".\src\*" -include "*.js","*.css", "*.html", "*.png" -Destination "$destination\temp"
+Copy-Item -Path ".\src\images\logo.png" -Destination "$destination\temp\images"
 Copy-Item -path ".\src\$browser\*" -Recurse -Destination "$destination\temp"
 
 &7z a -r -y "$browser.zip" "$destination\temp\*"
