@@ -73,7 +73,7 @@ class PopUp {
      */
     async loadSettings() {
         if (!chrome.storage) {
-            const settings = await browser.storage.local.get({
+            const settings = await browser.storage.sync.get({
                 tag: 'options',
                 key: null,
                 email: null,
@@ -85,7 +85,7 @@ class PopUp {
             return;
         }
 
-        chrome.storage.local.get({
+        chrome.storage.sync.get({
             tag: 'options',
             key: null,
             email: null,

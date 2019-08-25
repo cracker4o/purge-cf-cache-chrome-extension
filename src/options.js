@@ -60,10 +60,10 @@ class Options {
     }
 
     /**
-     * Syncs the options from the chrome local storage.
+     * Syncs the options from the chrome sync storage.
      */
     restoreOptions() {
-        chrome.storage.local.get(this.settings, (items) => {
+        chrome.storage.sync.get(this.settings, (items) => {
             this.elements.keyBox.value = items.key;
             this.elements.emailBox.value = items.email;
             this.elements.hidePurgeAllCheckbox.checked = items.hidePurgeAll;
@@ -115,7 +115,7 @@ class Options {
             showDevMode,
         };
 
-        chrome.storage.local.set(this.settings, () => {
+        chrome.storage.sync.set(this.settings, () => {
             this.elements.statusField.innerHTML = 'Options saved.';
             if (this.elements.keyBox.value !== '' && this.elements.emailBox.value !== '') {
                 this.elements.customPurgeGroup.classList.remove('hide');
