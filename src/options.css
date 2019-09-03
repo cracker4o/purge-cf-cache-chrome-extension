@@ -21,3 +21,15 @@
 .container .group .group-body {
     padding: 30px 30px 30px 30px;
 }
+
+.container .section-wrapper {
+    border: 1px solid rgba(204, 39, 39, 0.575);
+    border-radius: 3px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.container .token-message {
+    font-size: 12px;
+    margin-bottom: 10px;
+}

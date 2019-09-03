@@ -32,6 +32,7 @@ class Options {
             showDevModeCheckbox: document.querySelector('#show-dev-mode'),
             keyBox: document.querySelector('#key'),
             emailBox: document.querySelector('#email'),
+            tokenBox: document.querySelector('#token'),
             refreshBox: document.querySelector('#refresh'),
             customPurgeGroup: document.querySelector('#custom-purge-group'),
             statusField: document.querySelector('#status'),
@@ -43,6 +44,7 @@ class Options {
             tag: 'options',
             key: null,
             email: null,
+            token: null,
             refresh: null,
             hidePurgeAll: false,
             showDevMode: false,
@@ -65,11 +67,12 @@ class Options {
     restoreOptions() {
         chrome.storage.sync.get(this.settings, (items) => {
             this.elements.keyBox.value = items.key;
+            this.elements.tokenBox.value = items.token;
             this.elements.emailBox.value = items.email;
             this.elements.hidePurgeAllCheckbox.checked = items.hidePurgeAll;
             this.elements.showDevModeCheckbox.checked = items.showDevMode;
 
-            this.api = new Api(items.email, items.key);
+            this.api = new Api(items.email, items.key, items.token);
 
             if (items.refresh != null && items.refresh !== undefined) {
                 this.elements.refreshBox.value = items.refresh;
@@ -77,7 +80,7 @@ class Options {
                 this.elements.refreshBox.value = 10;
             }
 
-            if (items.key != null && items.key !== '' && items.email != null && items.email !== '') {
+            if ((items.key != null && items.key !== '' && items.email != null && items.email !== '') || (items.token != null && items.token !== '')) {
                 this.elements.customPurgeGroup.classList.remove('hide');
             } else {
                 this.elements.customPurgeGroup.classList.add('hide');
@@ -91,16 +94,18 @@ class Options {
     saveClick() {
         const key = this.elements.keyBox.value;
         const email = this.elements.emailBox.value;
+        const token = this.elements.tokenBox.value;
         const refresh = this.elements.refreshBox.value;
         const hidePurgeAll = this.elements.hidePurgeAllCheckbox.checked;
         const showDevMode = this.elements.showDevModeCheckbox.checked;
 
         this.elements.errorField.innerHTML = '';
 
-        if (key === '' || email === '' || refresh === '') {
+        if (((key === '' || email === '') && token === '') || refresh === '') {
             let validationMessage = 'The following fields are required:';
             validationMessage += !key ? '<p>Api Key</p>' : '';
             validationMessage += !email ? '<p>E-mail</p>' : '';
+            validationMessage += !token ? '<p>OR a valid Api Token</p>' : '';
             validationMessage += !refresh ? '<p>Refresh Timeout</p>' : '';
             this.elements.errorField.innerHTML = validationMessage;
             return;
@@ -110,6 +115,7 @@ class Options {
             tag: 'options',
             key,
             email,
+            token,
             refresh,
             hidePurgeAll,
             showDevMode,
@@ -117,7 +123,7 @@ class Options {
 
         chrome.storage.sync.set(this.settings, () => {
             this.elements.statusField.innerHTML = 'Options saved.';
-            if (this.elements.keyBox.value !== '' && this.elements.emailBox.value !== '') {
+            if ((this.elements.keyBox.value !== '' && this.elements.emailBox.value !== '') || this.elements.tokenBox.value !== '') {
                 this.elements.customPurgeGroup.classList.remove('hide');
             } else {
                 this.elements.customPurgeGroup.classList.add('hide');

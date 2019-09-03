@@ -19,9 +19,10 @@
  * @see https://api.cloudflare.com
  */
 export default class CloudFlareApi {
-    constructor(email, key) {
+    constructor(email, key, token) {
         this.email = email;
         this.key = key;
+        this.token = token;
         this.cloudFlareApiUrl = 'https://api.cloudflare.com/client/v4/';
     }
 
@@ -32,15 +33,24 @@ export default class CloudFlareApi {
      */
     async getZoneId(domain) {
         const url = `${this.cloudFlareApiUrl}zones?name=${domain}&status=active`;
+        let headers = {
+            'Content-Type': 'application/json',
+            'x-auth-Email': this.email,
+            'x-auth-key': this.key,
+        };
+
+        if (this.token) {
+            headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`,
+            };
+        }
+
         const result = await fetch(
             url,
             {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-auth-Email': this.email,
-                    'x-auth-key': this.key,
-                },
+                headers,
             },
         );
 
@@ -66,13 +76,21 @@ export default class CloudFlareApi {
         }
 
         const url = `${this.cloudFlareApiUrl}zones/${zoneId}/purge_cache`;
+        let headers = {
+            'Content-Type': 'application/json',
+            'x-auth-Email': this.email,
+            'x-auth-key': this.key,
+        };
+
+        if (this.token) {
+            headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`,
+            };
+        }
         const result = await fetch(url, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-Email': this.email,
-                'x-auth-key': this.key,
-            },
+            headers,
             body: JSON.stringify(purgeSettings),
         });
 
@@ -93,13 +111,21 @@ export default class CloudFlareApi {
      */
     async getZoneDevelopmentMode(zoneId) {
         const url = `${this.cloudFlareApiUrl}zones/${zoneId}/settings/development_mode`;
+        let headers = {
+            'Content-Type': 'application/json',
+            'x-auth-Email': this.email,
+            'x-auth-key': this.key,
+        };
+
+        if (this.token) {
+            headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`,
+            };
+        }
         const result = await fetch(url, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-Email': this.email,
-                'x-auth-key': this.key,
-            },
+            headers,
         });
 
         if (result && result.ok) {
@@ -118,14 +144,23 @@ export default class CloudFlareApi {
      */
     async setZoneDevelopmentMode(zoneId, developmentModeState) {
         const url = `${this.cloudFlareApiUrl}zones/${zoneId}/settings/development_mode`;
+        let headers = {
+            'Content-Type': 'application/json',
+            'x-auth-Email': this.email,
+            'x-auth-key': this.key,
+        };
+
+        if (this.token) {
+            headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`,
+            };
+        }
+
         const val = developmentModeState ? 'on' : 'off';
         const result = await fetch(url, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-Email': this.email,
-                'x-auth-key': this.key,
-            },
+            headers,
             body: JSON.stringify({
                 value: val,
             }),

@@ -164,7 +164,6 @@ export default class PurgeInfo {
                 const cacheControl = response.getResponseHeader('cache-control');
 
                 if (cfRay == null && cacheStatus == null) {
-                    // this.elements.purgeButton.className = '';
                     this.elements.status.classList.add('error');
                     this.utility.setStatusMessage(document.querySelector('#status'), 'NO INFO AVAILABLE', 3000);
                     return;

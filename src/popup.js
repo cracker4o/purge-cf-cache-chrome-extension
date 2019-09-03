@@ -77,6 +77,7 @@ class PopUp {
                 tag: 'options',
                 key: null,
                 email: null,
+                token: null,
                 refresh: null,
                 hidePurgeAll: false,
                 showDevMode: false,
@@ -89,6 +90,7 @@ class PopUp {
             tag: 'options',
             key: null,
             email: null,
+            token: null,
             refresh: null,
             hidePurgeAll: false,
             showDevMode: false,
@@ -104,7 +106,7 @@ class PopUp {
     async setup(settings) {
         this.settings = settings;
         this.settingsSet = true;
-        if (!this.settings.email) {
+        if (!this.settings.email && !this.settings.token) {
             this.settingsSet = false;
         }
 
@@ -113,7 +115,7 @@ class PopUp {
         }
 
         if (this.settingsSet) {
-            this.api = new Api(this.settings.email, this.settings.key);
+            this.api = new Api(this.settings.email, this.settings.key, this.settings.token);
             this.showElement(this.elements.refreshCheckbox);
             this.showElement(this.elements.purgeButton);
             this.showElement(this.elements.infoBtn);

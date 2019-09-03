@@ -53,25 +53,41 @@
           </div>
         </div>
 
-        <div class="field">
-          <div class="left-part">
-            <label for="email">
-              E-mail:
-            </label>
+        <div class="section-wrapper">
+          <div class="field">
+            <div class="token-message error">
+              CloudFlare has a new safer API authorization method called API Token.
+              Please generate a new API token at your CloudFlare profile and enter it in the API token filed.
+              The old API key and e-mail are going to be deprecated in future versions of this extension.
+              Currently the e-mail and the API key fields are only used for backwards compatibility.
+            </div>
+            <div class="left-part">
+              <label for="email">
+                E-mail:
+              </label>
+            </div>
+            <div class="right-part">
+              <input type="text" id="email" placeholder="CloudFlare profile e-mail" />
+            </div>
           </div>
-          <div class="right-part">
-            <input type="text" id="email" placeholder="CloudFlare profile e-mail" />
+
+          <div class="field">
+            <div class="left-part">
+              <label for="key">
+                Api Key:
+              </label>
+            </div>
+            <div class="right-part">
+              <input type="password" id="key" placeholder="CloudFlare API key" />
+            </div>
           </div>
         </div>
-
         <div class="field">
           <div class="left-part">
-            <label for="key">
-              Api Key:
-            </label>
+            Api Token:
           </div>
           <div class="right-part">
-            <input type="password" id="key" placeholder="CloudFlare API key" />
+            <input type="password" id="token" placeholder="CloudFlare API token" />
           </div>
         </div>
         <div class="field">
