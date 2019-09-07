@@ -8,6 +8,7 @@ Please visit the "Cloudflare Purge Plugin" website at [www.cf-purge.com](http://
 The CloudFlare purge plugin uses the CloudFlare API to purge any page of a website that serves its contents through the CloudFlare CDN. After you set your CF e-mail and API key in the options, you can purge the cache of any page of your CF enabled website. After version 1.3, you can purge the entire cache for the domain of your current tab.
 
 ### Changeset
+v1.6.1: Added support for Cloudflare API Tokens. Please check [https://www.cf-purge.com/token-setup.html](https://www.cf-purge.com/token-setup.html) to find out more.
 
 v1.6.0: Code refactoring for the whole project. Better readability cleanly written and using the latest trends in JavaScript development.
 
