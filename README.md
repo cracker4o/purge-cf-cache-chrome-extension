@@ -51,7 +51,7 @@ If you have ideas and suggestions about this project you can post them on the CF
 All pull requests will be reviewed and put in the following releases.
 
 ### Licensing information
-Copyright 2018 Tosho Toshev
+Copyright 2019 Tosho Toshev
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
