@@ -66,7 +66,7 @@ export default class CloudFlareApi {
 
     /**
      * Purges the CloudFlare cache for a particular domain for a provided set of urls.
-     * @see https://api.cloudflare.com/#zone-purge-files-by-url 
+     * @see https://api.cloudflare.com/#zone-purge-files-by-url
      * @param {Object} purgeSettings an array of urls to purge
      * @param {String} zoneId the zone ID of the domain
      */

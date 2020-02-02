@@ -16,7 +16,6 @@
 
 import Utility from './utility.js';
 import PurgeInfo from './info.js';
-import Api from './api.js';
 
 class PopUp {
     constructor() {
@@ -115,7 +114,6 @@ class PopUp {
         }
 
         if (this.settingsSet) {
-            this.api = new Api(this.settings.email, this.settings.key, this.settings.token);
             this.showElement(this.elements.refreshCheckbox);
             this.showElement(this.elements.purgeButton);
             this.showElement(this.elements.infoBtn);
@@ -129,9 +127,9 @@ class PopUp {
                 this.showElement(this.elements.devModeWrapper);
                 const domain = await this.getCurrentDomain();
                 try {
-                    const zoneId = await this.api.getZoneId(domain);
+                    const zoneId = await this.getZoneId(domain);
                     if (zoneId) {
-                        const zoneDevelopmentMode = await this.api.getZoneDevelopmentMode(zoneId);
+                        const zoneDevelopmentMode = await this.getZoneDevelopmentMode(zoneId);
                         if (zoneDevelopmentMode) {
                             this.elements.devMode.checked = zoneDevelopmentMode;
                         }
@@ -153,9 +151,9 @@ class PopUp {
         if (tab && tab.url) {
             const domain = await this.getCurrentDomain();
             try {
-                const zoneId = await this.api.getZoneId(domain);
+                const zoneId = await this.getZoneId(domain);
                 try {
-                    const rayId = await this.api.purgeCache({ files: [tab.url] }, zoneId);
+                    const rayId = await this.purgeCache({ files: [tab.url] }, zoneId);
                     if (rayId) {
                         await this.onPurgeSuccess();
                     }
@@ -182,10 +180,10 @@ class PopUp {
         if (currentDomain) {
             this.showPrompt(currentDomain, async (domain) => {
                 try {
-                    const zoneId = await this.api.getZoneId(domain);
+                    const zoneId = await this.getZoneId(domain);
                     if (zoneId) {
                         try {
-                            const rayId = this.api.purgeCache({ purge_everything: true }, zoneId);
+                            const rayId = this.purgeCache({ purge_everything: true }, zoneId);
                             if (rayId) {
                                 await this.onPurgeSuccess();
                             }
@@ -336,18 +334,76 @@ class PopUp {
         const domain = await this.getCurrentDomain();
         try {
             if (domain) {
-                const zoneId = await this.api.getZoneId(domain);
+                const zoneId = await this.getZoneId(domain);
                 this.showPrompt(domain, () => {
-                    this.api.setZoneDevelopmentMode(zoneId, developmentModeState);
+                    this.setZoneDevelopmentMode(zoneId, developmentModeState);
                 }, async () => {
-                    const zoneDevelopmentMode = await this.api
-                        .getZoneDevelopmentMode(zoneId);
+                    const zoneDevelopmentMode = await this.getZoneDevelopmentMode(zoneId);
                     this.elements.devMode.checked = zoneDevelopmentMode;
                 }, 'Are you sure?');
             }
         } catch (error) {
             console.log(error);
         }
+    }
+
+    setZoneDevelopmentMode(zoneId, developmentModeState) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.runtime.sendMessage({
+                    rSettings: this.settings,
+                    type: 'setZoneDevelopmentMode',
+                    rZoneId: zoneId,
+                    rDevModeState: developmentModeState,
+                }, resolve());
+            } catch (error) {
+                reject(new Error(error));
+            }
+        });
+    }
+
+    getZoneDevelopmentMode(zoneId) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.runtime.sendMessage({
+                    rSettings: this.settings,
+                    type: 'getZoneDevelopmentMode',
+                    rZoneId: zoneId,
+                }, zoneDevelopmentMode => resolve(zoneDevelopmentMode));
+            } catch (error) {
+                reject(new Error(error));
+            }
+        });
+    }
+
+    getZoneId(domain) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.runtime.sendMessage({
+                    rSettings: this.settings,
+                    type: 'getZoneId',
+                    rDomain: domain,
+                },
+                zoneId => resolve(zoneId));
+            } catch (error) {
+                reject(new Error(error));
+            }
+        });
+    }
+
+    purgeCache(purgeSettings, zoneId) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.runtime.sendMessage({
+                    rSettings: this.settings,
+                    type: 'purgeCache',
+                    rPurgeSettings: purgeSettings,
+                    rZoneId: zoneId,
+                }, rayId => resolve(rayId));
+            } catch (error) {
+                reject(new Error(error));
+            }
+        });
     }
 }
 
