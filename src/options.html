@@ -53,7 +53,7 @@
           </div>
         </div>
 
-        <div class="section-wrapper">
+        <div class="section-wrapper hide">
           <div class="field">
             <div class="token-message error">
               CloudFlare has a new safer API authorization method called API Token.
@@ -84,16 +84,34 @@
             </div>
           </div>
         </div>
-        <div class="field">
+        <div class="field bottom-separator">
           <div class="left-part">
-            Api Token:
+            Default Api Token:
           </div>
           <div class="right-part">
             <input type="password" id="token" placeholder="CloudFlare API token" />
           </div>
         </div>
         <div class="field">
-          <button class="right mr-8" id="save">Save</button>
+          <div class="left-part">
+            Add Profile: <span class="hint">(optional)</span>
+          </div>
+          <div class="right-part">
+            <input type="text" id="add-profile-name" placeholder="Profile Name" />
+          </div>
+          <div class="left-part">
+          </div>
+          <div class="right-part">
+            <input type="password" class="mt-8" id="add-profile-token" placeholder="Profile API Token" />
+          </div>
+            <button class="right mr-8 mt-8" id="add-profile-btn">Add Profile</button>
+            <div class="clear"></div>
+        </div>
+        <div class="field bottom-separator">
+          <div id="profiles-table-wrapper"></div>
+        </div>
+        <div class="field">
+          <button class="right mr-8" id="save">Save Settings</button>
           <div class="clear"></div>
         </div>
         <div id="status" class="info"></div>

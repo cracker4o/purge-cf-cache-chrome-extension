@@ -42,6 +42,8 @@ class PopUp {
             promptYes: document.querySelector('#promptYes'),
             promptNo: document.querySelector('#promptNo'),
             infoBtn: document.querySelector('#infoBtn'),
+            selectProfiles: document.querySelector('#select-profiles'),
+            profilesParent: document.querySelector('.profiles-parent'),
         };
 
         const isFirefox = typeof InstallTrigger !== 'undefined';
@@ -54,12 +56,14 @@ class PopUp {
         this.hideElement(this.elements.devModeWrapper);
         this.hideElement(this.elements.refreshCheckbox);
         this.hideElement(this.elements.infoBtn);
+        this.hideElement(this.elements.profilesParent);
         this.showElement(this.elements.optionsButton);
         this.elements.prompText.innerHTML = this.defaultPromptText;
         this.elements.purgeAllButton.addEventListener('click', this.purgeAllClick.bind(this));
         this.elements.purgeButton.addEventListener('click', this.purgeButtonClick.bind(this));
         this.elements.optionsButton.addEventListener('click', this.optionsButtonClick.bind(this));
         this.elements.devMode.addEventListener('change', this.toggleDeveloperMode.bind(this));
+        this.elements.selectProfiles.addEventListener('change', this.changeProfile.bind(this));
         this.loadSettings();
     }
 
@@ -80,6 +84,7 @@ class PopUp {
                 refresh: null,
                 hidePurgeAll: false,
                 showDevMode: false,
+                profiles: null,
             });
             this.setup(settings);
             return;
@@ -93,6 +98,7 @@ class PopUp {
             refresh: null,
             hidePurgeAll: false,
             showDevMode: false,
+            profiles: null,
         }, (items) => {
             this.setup(items);
         });
@@ -137,6 +143,18 @@ class PopUp {
                 } catch (error) {
                     console.log(error.message);
                 }
+            }
+
+            if (this.settings.profiles && Object.keys(this.settings.profiles).length > 0) {
+                const selectProfilesElem = this.elements.selectProfiles;
+                selectProfilesElem.options[selectProfilesElem.options.length] = new Option('Default Token', this.settings.token);
+                for (const profile in this.settings.profiles) {
+                    const profileName = profile;
+                    const profileToken = this.settings.profiles[profile];
+                    selectProfilesElem.options[selectProfilesElem.options.length] = new Option(profileName, profileToken);
+                }
+
+                this.showElement(this.elements.profilesParent);
             }
         }
     }
@@ -244,11 +262,17 @@ class PopUp {
         }
     }
 
+    changeProfile(e) {
+        const select = e.target;
+        this.settings.token = select.value;
+    }
+
     /**
      * A success event handler for the purge operation.
      */
     async onPurgeSuccess() {
         this.elements.purgeButton.className = '';
+        this.elements.status.classList.remove('error');
         this.elements.status.classList.add('success');
         this.utility.setStatusMessage(this.elements.status, 'SUCCESS', 3000);
         if (this.elements.refresh.checked) {
@@ -355,7 +379,7 @@ class PopUp {
                     type: 'setZoneDevelopmentMode',
                     rZoneId: zoneId,
                     rDevModeState: developmentModeState,
-                }, resolve());
+                }, () => resolve());
             } catch (error) {
                 reject(new Error(error));
             }
@@ -369,7 +393,13 @@ class PopUp {
                     rSettings: this.settings,
                     type: 'getZoneDevelopmentMode',
                     rZoneId: zoneId,
-                }, zoneDevelopmentMode => resolve(zoneDevelopmentMode));
+                }, response => {
+                    if (response.error) {
+                        return reject(response.error);
+                    }
+
+                    return resolve(response.result);
+                });
             } catch (error) {
                 reject(new Error(error));
             }
@@ -384,9 +414,20 @@ class PopUp {
                     type: 'getZoneId',
                     rDomain: domain,
                 },
-                zoneId => resolve(zoneId));
-            } catch (error) {
-                reject(new Error(error));
+                response => {
+                    if (response.error) {
+                        const count = (domain.match(/\./g) || []).length;
+                        if (count > 1) {
+                            const fixedDomain = this.utility.fixDomain(domain);
+                            return resolve(this.getZoneId(fixedDomain));
+                        }
+
+                        return reject(new Error(response.error));
+                    }
+                    return resolve(response.result);
+                });
+            } catch (error) {                
+                return reject(new Error(error));
             }
         });
     }
@@ -399,7 +440,13 @@ class PopUp {
                     type: 'purgeCache',
                     rPurgeSettings: purgeSettings,
                     rZoneId: zoneId,
-                }, rayId => resolve(rayId));
+                }, response => {
+                    if (response.error) {
+                        return reject(response.error);
+                    }
+
+                    return resolve(response.result)
+                });
             } catch (error) {
                 reject(new Error(error));
             }

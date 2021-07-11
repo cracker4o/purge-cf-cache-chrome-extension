@@ -8288,6 +8288,20 @@ export default class Utility {
     }
 
     /**
+     * Sometimes Cloudflare requires 
+     * @param {*} domain 
+     */
+    fixDomain(domain) {
+        const count = (domain.match(/\./g) || []).length;
+        if (count > 1) {
+            const regex = /^[a-zA-Z0-9]*\./i;
+            return domain.replace(domain.match(regex)[0], '');
+        }
+
+        return domain;
+    }
+
+    /**
      * Parses an error response coming from the CloudFlare API
      * @param {*} errorResponse the error response object
      */

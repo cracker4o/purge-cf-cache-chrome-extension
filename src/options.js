@@ -39,6 +39,10 @@ class Options {
             errorField: document.querySelector('#error-status'),
             customUrl: document.querySelector('#custom-url'),
             purgeStatus: document.querySelector('#purge-status'),
+            profilesTableWrapper: document.querySelector('#profiles-table-wrapper'),
+            addProfileButton: document.querySelector('#add-profile-btn'),
+            addProfileName: document.querySelector('#add-profile-name'),
+            addProfileToken: document.querySelector('#add-profile-token'),
         };
         this.settings = {
             tag: 'options',
@@ -48,10 +52,13 @@ class Options {
             refresh: null,
             hidePurgeAll: false,
             showDevMode: false,
+            profiles: null
         };
 
+        this.profilesModel = null;
         this.elements.saveButton.addEventListener('click', this.saveClick.bind(this));
         this.elements.customPurgeButton.addEventListener('click', this.customPurge.bind(this));
+        this.elements.addProfileButton.addEventListener('click', this.addProfile.bind(this));
         this.elements.hidePurgeAllCheckbox.addEventListener('change', this.saveClick.bind(this));
         this.elements.showDevModeCheckbox.addEventListener('change', this.saveClick.bind(this));
         this.restoreOptions();
@@ -85,8 +92,76 @@ class Options {
             } else {
                 this.elements.customPurgeGroup.classList.add('hide');
             }
+
+            this.profilesModel = items.profiles;
+            this.renderProfiles(this.profilesModel);
         });
     }
+
+    renderProfiles(profiles) {
+        if (!profiles || Object.keys(profiles).length === 0) {
+            return;
+        }
+
+        let tableHtml = `
+        <table>
+            <tr>
+                <th>Profile</th>
+                <th>API Token</th>
+            </tr>
+        `;
+
+        for (const profile in profiles) {
+            const profileName = profile;
+            const profileToken = profiles[profile];
+            
+            tableHtml += `
+                <tr>
+                    <td>${profileName}</td>
+                    <td>${this.obfuscateToken(profileToken)}</td>
+                    <td>
+                        <a href="#" class="profile-remove" data-item="${profileName}">remove</a>
+                    </td>
+                </tr>
+            `;
+        }
+
+        tableHtml += '</table>';
+
+
+        this.elements.profilesTableWrapper.innerHTML = tableHtml;
+        document.querySelectorAll('.profile-remove').forEach(element => {
+            element.addEventListener('click', (e) => {
+                const dataItem = e.target.getAttribute('data-item');
+                delete this.profilesModel[dataItem];
+                if (Object.keys(this.profilesModel).length === 0) {
+                    this.elements.profilesTableWrapper.innerHTML = '';
+                }
+                this.renderProfiles(this.profilesModel);
+            });
+        });
+    }
+
+    obfuscateToken(token) {
+        const obfCount = Math.floor(0.7 * token.length);
+        return '*'.repeat(obfCount) + token.substr(obfCount - 1, token.length - obfCount);
+    }
+
+    addProfile() {
+        const profileName = this.elements.addProfileName.value;
+        const profileToken = this.elements.addProfileToken.value;
+
+        if (profileName !== '' && profileToken !== '') {
+            if (!this.profilesModel) {
+                this.profilesModel = {};
+            }
+
+            this.profilesModel[profileName] = profileToken;
+            this.renderProfiles(this.profilesModel);
+        }
+    }
+
+
 
     /**
      * Saves the current options
@@ -119,6 +194,7 @@ class Options {
             refresh,
             hidePurgeAll,
             showDevMode,
+            profiles: this.profilesModel
         };
 
         chrome.storage.sync.set(this.settings, () => {

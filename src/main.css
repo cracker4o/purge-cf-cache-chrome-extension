@@ -58,3 +58,10 @@ body {
     background-color: #af661a;
     padding: 20px;
 }
+
+select {
+    background-color: #23272a;
+    border: solid 1px #4f5358;
+    color: white;
+    padding: 4px;
+}
