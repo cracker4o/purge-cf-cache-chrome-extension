@@ -43,6 +43,8 @@ class Options {
             addProfileButton: document.querySelector('#add-profile-btn'),
             addProfileName: document.querySelector('#add-profile-name'),
             addProfileToken: document.querySelector('#add-profile-token'),
+            propertiesListGroup: document.querySelector('#cf-properties-list'),
+            propertiesList: document.querySelector('#cf-properties-list .group-body'),
         };
         this.settings = {
             tag: 'options',
@@ -89,12 +91,15 @@ class Options {
 
             if ((items.key != null && items.key !== '' && items.email != null && items.email !== '') || (items.token != null && items.token !== '')) {
                 this.elements.customPurgeGroup.classList.remove('hide');
+                this.elements.propertiesListGroup.classList.remove('hide');
             } else {
                 this.elements.customPurgeGroup.classList.add('hide');
+                this.elements.propertiesListGroup.classList.add('hide');
             }
 
             this.profilesModel = items.profiles;
             this.renderProfiles(this.profilesModel);
+            this.listOwnedProperties();
         });
     }
 
@@ -257,6 +262,39 @@ class Options {
         } catch (zoneError) {
             this.utility.setStatusMessage(this.elements.purgeStatus, zoneError, 3000);
         }
+    }
+
+    async listOwnedProperties() {
+        const ownedProperties = await this.api.getZones();
+        let propertiesListHtml= `
+            <table>
+                <tr>
+                    <th>Zone ID</th>
+                    <th>Created Date</th>
+                    <th>Registrar</th>
+                    <th>Domain</th>
+                </tr>
+        `;
+        ownedProperties.forEach(zone => {
+            let registrar = zone.original_registrar ? zone.original_registrar : 'Cloudflare';
+            propertiesListHtml += `
+            <tr>
+                <td>${zone.id}</td>
+                <td>
+                    ${new Date(zone.created_on).toString()}
+                </td>
+                <td>
+                    ${registrar}
+                </td>
+                <td>
+                    <a href="https://${zone.name}" target="_blank">${zone.name}</a>
+                </td>
+            </tr>
+            `;
+        });
+
+        propertiesListHtml += '</table>';
+        this.elements.propertiesList.innerHTML = propertiesListHtml;
     }
 }
 

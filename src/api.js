@@ -65,6 +65,43 @@ export default class CloudFlareApi {
     }
 
     /**
+     * Gets all CloudFlare zones owned by the user
+     * @see https://api.cloudflare.com/#zone-list-zones
+     */
+    async getZones() {
+        const url = `${this.cloudFlareApiUrl}zones?status=active`;
+        let headers = {
+            'Content-Type': 'application/json',
+            'x-auth-Email': this.email,
+            'x-auth-key': this.key,
+        };
+
+        if (this.token) {
+            headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`,
+            };
+        }
+
+        const result = await fetch(
+            url,
+            {
+                method: 'GET',
+                headers,
+            },
+        );
+
+        if (result && result.ok) {
+            const data = await result.json();
+            if (data.result.length > 0) {
+                return data.result;
+            }
+        }
+
+        throw new Error('Unable to get the zone ID.');
+    }
+
+    /**
      * Purges the CloudFlare cache for a particular domain for a provided set of urls.
      * @see https://api.cloudflare.com/#zone-purge-files-by-url
      * @param {Object} purgeSettings an array of urls to purge

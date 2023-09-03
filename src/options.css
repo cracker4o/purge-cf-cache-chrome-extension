@@ -9,17 +9,21 @@
 .container {
     max-width: 1280px;
     margin: 0 auto;
+    padding-bottom: 4em;
 }
 
 .container .group {
     margin: 20px auto;
+    border-radius: 16px;
     background-color: #2C2F33;
-    box-shadow: 12px 12px 4px -12px rgba(0,0,0,0.5);
+    box-shadow: 20px 24px 16px -20px rgba(0,0,0,0.5);
 }
 
 .container .group .group-title {
     background-color: #4f5358;
-    padding: 10px 30px
+    padding: 10px 30px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
 }
 
 .container .group .group-title > h3 {
@@ -42,20 +46,28 @@
     margin-bottom: 10px;
 }
 
-#profiles-table-wrapper table {
+#profiles-table-wrapper table,
+#property-list-wrapper table {
     width: 100%;
 }
 
-#profiles-table-wrapper table th {
+#profiles-table-wrapper table th,
+#property-list-wrapper table th {
 
 }
 
-#profiles-table-wrapper table tr:nth-child(odd) {
+#profiles-table-wrapper table tr:nth-child(odd),
+#property-list-wrapper table  tr:nth-child(odd) {
     background-color: #4f5358;
 }
 
-#profiles-table-wrapper table tr:nth-child(even) {
+#profiles-table-wrapper table tr:nth-child(even),
+#property-list-wrapper table tr:nth-child(even) {
     background-color: #a9a9a961;
+}
+
+#profiles-table-wrapper {
+    margin-bottom: 4em;
 }
 
 a {

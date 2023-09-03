@@ -39,6 +39,10 @@ body {
     display: block;
 }
 
+.infoBtn-wrapper {
+    text-align: center;
+}
+
 #infoBtn span {
     line-height: 25px;
 }
