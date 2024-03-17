@@ -2,14 +2,16 @@
 
 <html>
     <head>
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="The home of the Cloudflare® purge browser extension. ">
         <title>Cloudflare API token setup instructions</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         <link href="media/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="css/site.css">
-        
-        <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     </head>
     <body>
         
@@ -28,26 +30,46 @@
         })(window,document,'script','dataLayer','GTM-M9LL9R');</script>        
         <!-- End Google Tag Manager -->
         
+        <nav class="hide-on-med-and-down">
+            <div class="nav-wrapper grey darken-3">
+              <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>
+                    <a class="nav-home-link" href="/"><i class="material-icons">home</i></a>
+                </li>
+                <li>
+                    <a class="nav-github-link" target="_blank" href="https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok">
+                        <img src="media/Google-Chrome-icon-120px.png" alt="Chrome Extension" />
+                        <span>
+                            Chrome Web Store
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-github-link" target="_blank" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension">
+                        <img src="media/GitHub-Mark-Light-120px-plus.png" alt="GitHub repository" />
+                        <span>
+                            GitHub
+                        </span>
+                    </a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+
         <main>
             <div class="section grey darken-4">
-                <div class="row">
-                    <div class="col s12 l6 white-text">
-                        <h4>Cloudflare API token setup instructions.</h4>
-                    </div>
-                    <div class="col l6 hide-on-med-and-down">
-                        <img src="media/cf-logo-v-rgb.png" alt="Cloudflare" class="cloudflare-logo">
-                        <div class="small-text white-text">
-                            This website is not related to CloudFlare and it is not promoting any of CloudFlare services.
-                        </div>
+                <div class="row container">                  
+                    <div class="col s12 center white-text">
+                        <h3>Cloudflare API token setup instructions.</h3>
                     </div>
                 </div>
             </div>
             
-            <div class="section grey lighten-1">
-                <div class="row">
+            <div class="section grey darken-4 white-text">
+                <div class="row container">
                     <div class="col s12">
-                        <h3>The benefits of an API token versus an API key</h3>
-                        The CF-Purge extension is pleased to announce the support of the new Cloudflare feature - <a class="red-text darken-3" href="https://blog.cloudflare.com/api-tokens-general-availability/" target="_blank">API tokens</a>.
+                        <h5>The benefits of an API token versus an API key</h5>
+                        The CF-Purge extension is pleased to announce the support of the new Cloudflare feature - <a class="red-text text-accent-3" href="https://blog.cloudflare.com/api-tokens-general-availability/" target="_blank">API tokens</a>.
                         The API tokens are a secure way to set specific access permissions of API clients like the CF-Purge extension.
                         Previously, the CloudFlare API was using Global API authorization keys which had a wide range of permissions and if
                         obtained by an attacker the API keys were able to control all cache configurations, DNS settings and other Cloudflare CDN functionalities.
@@ -58,7 +80,7 @@
                         <p>
                         <strong>
                             Cloudflare has great documentation on how API tokens function here: 
-                            <a class="red-text darken-3" target="_blank" href="https://support.cloudflare.com/hc/en-us/articles/200167836-Where-do-I-find-my-Cloudflare-API-key">API tokens</a>
+                            <a class="red-text text-accent-3" target="_blank" href="https://support.cloudflare.com/hc/en-us/articles/200167836-Where-do-I-find-my-Cloudflare-API-key">API tokens</a>
                         </strong>
                         </p>
                     </div>
@@ -66,79 +88,60 @@
             </div>
             
             <div class="section grey darken-3 white-text">
-                <div class="row">
+                <div class="row container">
                     <div class="col s12">
-                        <h3>Setup API token instructions</h3>
-                        <table>
-                            <tr>
-                                <th>1. Login to <a class="red-text darken-3" href="https://cloudflare.com">https://cloudflare.com</a> and navigate to 
-                                    <a class="red-text darken-3" target="_blank" href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a>
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    2. Please follow the instructions on the Cloudflare support site to generate an API token:
-                                    <a class="red-text darken-3" target="_blank" href="https://support.cloudflare.com/hc/en-us/articles/200167836-Where-do-I-find-my-Cloudflare-API-key#12345680">Cloudflare API tokens support</a>.
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    3. The CF-Purge extension requires the following permissions on a token in order to function properly:
-                                    <p>
+                        <h5>Setup API token instructions</h5>
+
+                        <p>
+                            1. Login to <a class="red-text text-accent-3" href="https://cloudflare.com">https://cloudflare.com</a> and navigate to 
+                            <a class="red-text text-accent-3" target="_blank" href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a>
+                        </p>
+                        <p>
+                            2. Please follow the instructions on the Cloudflare support site to generate an API token:
+                            <a class="red-text text-accent-3" target="_blank" href="https://support.cloudflare.com/hc/en-us/articles/200167836-Where-do-I-find-my-Cloudflare-API-key#12345680">Cloudflare API tokens support</a>.
+                        </p>
+                        <p>
+                            3. The CF-Purge extension requires the following permissions on a token in order to function properly:
+                                    <p class="center">
                                         <img class="z-depth-3 hoverable" src="media/api-token.png" />
                                     </p>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    4. Generate the API token with the above permissions and go to the CF-Purge extension Options page by
+                        </p>
+                        <p>
+                            4. Generate the API token with the above permissions and go to the CF-Purge extension Options page by
                                        right clicking on the extension icon and selecting "Options".
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    5. Please clear your E-mail and Api Key from the fields and set the Api Token field as shown:
-                                    <p>
+                        </p>
+                        <p>
+                            5. Please clear your E-mail and Api Key from the fields and set the Api Token field as shown:
+                                    <p class="center">
                                         <img class="z-depth-3 hoverable" src="media/token-options-example.png" />
                                     </p>
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    6. Save your changes and enjoy a more secure way of purging your cached CDN content. 
+                        </p>
+                        <p>
+                            6. Save your changes and enjoy a more secure way of purging your cached CDN content. 
                                     If you notice some functionality issues with the extension, this probably means <br/> that the API token
                                     doesn't have the necessary permissions for a certain CloudFlare zone. Please revisit step 3 and generate
                                     a new API token with the proper permissions.
-                                </th>
-                            </tr>
-                        </table>
+                        </p>
                     </div>
                 </div>
             </div>
         </main>
         <footer class="page-footer grey darken-4">
             <div class="section white-text">
-                <div class="row">
-                    <div class="col s12 m6">
+                <div class="row container">
+                    <div class="col s12 l8">
                         <h4>Connect</h4>
-                        <div>
-                            <!-- Place this tag where you want the button to render. -->
+                        <div class="github-button-container">
                             <a class="github-button" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension" data-style="mega" data-count-href="/cracker4o/purge-cf-cache-chrome-extension/watchers" data-count-api="/repos/cracker4o/purge-cf-cache-chrome-extension#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch cracker4o/purge-cf-cache-chrome-extension on GitHub">Watch</a>
                         </div>
-                        <div>
-                            <!-- Place this tag where you want the button to render. -->
+                        <div class="github-button-container">
                             <a class="github-button" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension" data-icon="octicon-star" data-style="mega" data-count-href="/cracker4o/purge-cf-cache-chrome-extension/stargazers" data-count-api="/repos/cracker4o/purge-cf-cache-chrome-extension#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star cracker4o/purge-cf-cache-chrome-extension on GitHub">Star</a>
                         </div>
-                        <div>
-                            <!-- Place this tag where you want the button to render. -->
+                        <div class="github-button-container">
                             <a class="github-button" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension/fork" data-icon="octicon-repo-forked" data-style="mega" data-count-href="/cracker4o/purge-cf-cache-chrome-extension/network" data-count-api="/repos/cracker4o/purge-cf-cache-chrome-extension#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork cracker4o/purge-cf-cache-chrome-extension on GitHub">Fork</a>
                         </div>
                     </div>
-                    <div class="col s12 m4">
+                    <div class="col s12 l4 cf-logo-footer">
                         <div>
                             <a href="https://www.cloudflare.com/">
                                 <img src="media/cf-logo-v-rgb.png" alt="Cloudflare" class="cloudflare-logo" />
@@ -153,11 +156,15 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-copyright center-align grey-text text-lighten-4 deep-orange darken-4">
-                
-                    The Cloudflare Purge plugin is free for use. It falls under the terms and conditions of the Apache v2.0 license. &copy;<span id="year"></span> - <a href="mailto:cracker4o@gmail.com">Tosho Toshev</a>
-            </div>
+
+            <div class="footer-copyright red darken-2">
+                <div class="container center">
+                    The Cloudflare Purge plugin is free for use. It falls under the terms and conditions of the Apache v2.0 license.
+                    &copy;<span id="year"></span> - <a class="black-text text-accent-2" href="mailto:cracker4o@gmail.com">Tosho Toshev</a>
+                </div>
+              </div>
         </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script type="text/javascript" src="scripts/site.js"></script>
         <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
     </body>

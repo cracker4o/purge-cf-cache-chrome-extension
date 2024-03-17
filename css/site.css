@@ -1,6 +1,6 @@
 html {
     font-family: "Roboto";
-    font-size: 18px;
+    font-size: 16px;
 }
 
 a {
@@ -21,22 +21,25 @@ h2,h3,h4 {
     letter-spacing: -0.045em;
 }
 
-.privacy-policy {
-    background-color: #FDB632;
-    color: #027878;
-    font-weight: 500;
+.container {
+    width: 80%;
 }
 
-.privacy-policy h1 {
-    text-shadow: none;
+.nav-home-link {
+    &:hover {
+        color: lightgray;
+    }
 }
 
-.privacy-policy a {
-    color: #801638;
-}
+.nav-github-link {
+    &:hover {
+        color: lightgray;
+    }
 
-.privacy-policy a:hover {
-    color: #C22326;
+    img {
+        height: 1em;
+        padding-right: 8px;
+    }
 }
 
 /* MOBILE */
@@ -45,6 +48,14 @@ h2,h3,h4 {
         display:block;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .github-button-container {
+        &:first-of-type {
+            margin-left: 0;
+        }
+        display: inline-block;
+        margin-left: 10px;
     }
     
     .accent-link {
@@ -63,6 +74,10 @@ h2,h3,h4 {
     footer.page-footer {
         margin-top:0px;
     }
+
+    .cf-logo-footer {
+        margin-top:20px;
+    }
 }
 
 /* TABLET */
@@ -76,5 +91,9 @@ h2,h3,h4 {
 @media only screen and (min-width:1024px) {
     .cloudflare-logo {
         width: 494px;
+    }
+
+    .cf-logo-footer {
+        margin-top:0px;
     }
 }

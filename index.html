@@ -2,15 +2,16 @@
 
 <html>
     <head>
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="description" content="The home of the Cloudflare® purge browser extension. ">
         <title>The home page of the Cloudflare® purge browser extension</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         <link href="media/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="css/site.css">
-        
-        <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     </head>
     <body>
         
@@ -29,97 +30,126 @@
         })(window,document,'script','dataLayer','GTM-M9LL9R');</script>        
         <!-- End Google Tag Manager -->
         
+        <nav class="hide-on-med-and-down">
+            <div class="nav-wrapper grey darken-3">
+              <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>
+                    <a class="nav-github-link" target="_blank" href="https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok">
+                        <img src="media/Google-Chrome-icon-120px.png" alt="Chrome Extension" />
+                        <span>
+                            Chrome Web Store
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-github-link" target="_blank" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension">
+                        <img src="media/GitHub-Mark-Light-120px-plus.png" alt="GitHub repository" />
+                        <span>
+                            GitHub
+                        </span>
+                    </a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+
         <main>
             <div class="section grey darken-4">
                 <div class="row">
-                    <div class="col s12 m12 l4 white-text">
+                    <div class="col s12 center white-text">
                         <h1>CF-Purge</h1>
                         <h4>Just clears cached content. No hassle.</h4>  
                     </div>
-                    <div class="col l4 hide-on-med-and-down center">
+                </div>
+                <div class="row">
+                    <div class="col l12 hide-on-med-and-down center">
                         <img class="z-depth-3" alt="A screenshot of the Clouflare® purge browser extension interface" src="media/purge-extension.png" />
                     </div>
-                    <div class="col s12 m12 l4">
+                </div>                
+            </div>
+
+            <div class="section grey darken-3 hide-on-large-only">
+                <div class="row">
+                    <div class="col s12 m12 offset-l4 l4">
                         <div class="row">
-                            <div class="col col offset-m2 s6 m4">
-                                <a href="https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok"><img class="github-link" src="media/Google-Chrome-icon-120px.png" alt="Chrome Extension" /> <div class="center-align accent-link">CHROME WEB STORE</div></a>
+                            <div class="col offset-m2 s6 m4">
+                                <a href="https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok">
+                                    <img class="github-link" src="media/Google-Chrome-icon-120px.png" alt="Chrome Extension" />
+                                    <div class="center-align accent-link">Chrome Web Store</div>
+                                </a>
                             </div>
                             <div class="col s6 m4">
-                                <a href="https://github.com/cracker4o/purge-cf-cache-chrome-extension"><img class="github-link" src="media/GitHub-Mark-Light-120px-plus.png" alt="GitHub repository" />
-                                <div class="center-align accent-link">
-                                    GITHUB
-                                </div></a>
+                                <a href="https://github.com/cracker4o/purge-cf-cache-chrome-extension">
+                                    <img class="github-link" src="media/GitHub-Mark-Light-120px-plus.png" alt="GitHub repository" />
+                                    <div class="center-align accent-link">
+                                        GitHub
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="section grey lighten-1">
-                <div class="row">
-                    <div class="col s12">
-                        <h3>How it works</h3>
+            <div class="section grey">
+                <div class="row container">
+                    <div class="col s12 center">
+                        <h4>How it works</h4>
                         The Cloudflare purge plugin uses Cloudflare's API to clear the cache for the URL in the currently opened Chrome tab. The extension has the ability to purge the entire cache for the current domain. It also has the ability to provide information about the caching status of the current URL and tell the location of the Cloudflare node that serves the cached contents. It provides an option to purge multiple URLs at the same time using the options page.
                     </div>
                 </div>
             </div>
             
-            <div class="section grey darken-1 white-text">
-                <div class="row">
+            <div class="section grey darken-3 white-text">
+                <div class="row container">
                     <div class="col s12">
-                        <h3>Instructions</h3>
-                        <table>
-                            <tr>
-                                <th>1. Install the Cloudflare Purge Plugin from the Chrome webstore</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>2. Right click on the plugin and open the options page. Fill in your Cloudflare account e-mail and API key.</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>3. Open a page of your Cloudflare enabled website in a Chrome tab and click the "Purge Cache" button. The plugin will clear the page from the cache.</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>4. You can purge the entire cache with the "Purge Entire Cache" button.</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>5. You can get more information about the cache status and the current Cloudflare node by clicking the "Info" button</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    6. You can purge multiple URLs at the same time from the options screen. Just right click on the extension icon and select "Options" from the context menu.
-                                </th>
-                            </tr>
-                        </table>
+                        <h5>Instructions</h5>
+
+                        <p>
+                            1. Install the Cloudflare Purge Plugin from the Chrome webstore
+                        </p>
+
+                        <p>
+                            2. Right click on the plugin and open the options page. Fill in your Cloudflare account e-mail and API key.
+                        </p>
+
+                        <p>
+                            3. Open a page of your Cloudflare enabled website in a Chrome tab and click the "Purge Cache" button. The plugin will clear the page from the cache.
+                        </p>
+                        <p>
+                            4. You can purge the entire cache with the "Purge Entire Cache" button.
+                        </p>
+                        <p>
+                            5. You can get more information about the cache status and the current Cloudflare node by clicking the "Info" button
+                        </p>
+                        <p>
+                            6. You can purge multiple URLs at the same time from the options screen. Just right click on the extension icon and select "Options" from the context menu.
+                        </p>
                     </div>
                 </div>
             </div>
             
-            <div class="section grey lighten-1">
-                <div class="row">
+            <div class="section grey">
+                <div class="row container">
                     <div class="col s12">
-                        <h3>How to contribute?</h3>
+                        <h5>How to contribute?</h5>
                         <p>
-                            If you find an issue with the extension, you can submit it on project's GitHub issues <a class="blue-text darken-3" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension/issues">page</a>.
+                            If you find an issue with the extension, you can submit it on project's GitHub issues <a class="red-text text-accent-4" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension/issues">page</a>.
                         </p>
                         <p>
                             If you want to improve the extension with a better UI or a new functionality, please clone the master branch and submit a pull request with your changes and improvements.
                         </p>
                         <p>
-                            If you want to propose new features, please do so on the Chrome Web Store support page <a href="https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok/support" class="blue-text darken-3">here</a>.
+                            If you want to propose new features, please do so on the Chrome Web Store support page <a href="https://chrome.google.com/webstore/detail/cloudflare-purge-plugin/nbpecchpcfacahhekolpaofpmogkmmok/support" class="red-text text-accent-4">here</a>.
                         </p>
                     </div>
                 </div>
                 
             </div>
-            <div class="section grey darken-1 white-text">
-                <div class="row">
+            <div class="section grey darken-3 white-text">
+                <div class="row container">
                     <div class="col s12">
-                        <h3>Release Notes</h3>
+                        <h5>Release Notes</h5>
                             <p>
                                 v 1.8.0: Migrated the extension to use Chrome Manifest V3 for improved security and better compatibility with Google Chrome. Added a list of all user owned cloudflare zones for the current API key on the options page.
                             </p>
@@ -194,23 +224,20 @@
         </main>
         <footer class="page-footer grey darken-4">
             <div class="section white-text">
-                <div class="row">
-                    <div class="col s12 m6">
+                <div class="row container">
+                    <div class="col s12 l8">
                         <h4>Connect</h4>
-                        <div>
-                            <!-- Place this tag where you want the button to render. -->
+                        <div class="github-button-container">
                             <a class="github-button" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension" data-style="mega" data-count-href="/cracker4o/purge-cf-cache-chrome-extension/watchers" data-count-api="/repos/cracker4o/purge-cf-cache-chrome-extension#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch cracker4o/purge-cf-cache-chrome-extension on GitHub">Watch</a>
                         </div>
-                        <div>
-                            <!-- Place this tag where you want the button to render. -->
+                        <div class="github-button-container">
                             <a class="github-button" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension" data-icon="octicon-star" data-style="mega" data-count-href="/cracker4o/purge-cf-cache-chrome-extension/stargazers" data-count-api="/repos/cracker4o/purge-cf-cache-chrome-extension#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star cracker4o/purge-cf-cache-chrome-extension on GitHub">Star</a>
                         </div>
-                        <div>
-                            <!-- Place this tag where you want the button to render. -->
+                        <div class="github-button-container">
                             <a class="github-button" href="https://github.com/cracker4o/purge-cf-cache-chrome-extension/fork" data-icon="octicon-repo-forked" data-style="mega" data-count-href="/cracker4o/purge-cf-cache-chrome-extension/network" data-count-api="/repos/cracker4o/purge-cf-cache-chrome-extension#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork cracker4o/purge-cf-cache-chrome-extension on GitHub">Fork</a>
                         </div>
                     </div>
-                    <div class="col s12 m4">
+                    <div class="col s12 l4 cf-logo-footer">
                         <div>
                             <a href="https://www.cloudflare.com/">
                                 <img src="media/cf-logo-v-rgb.png" alt="Cloudflare" class="cloudflare-logo" />
@@ -225,11 +252,15 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-copyright center-align grey-text text-lighten-4 deep-orange darken-4">
-                
-                    The Cloudflare Purge plugin is free for use. It falls under the terms and conditions of the Apache v2.0 license. &copy;<span id="year"></span> - <a href="mailto:cracker4o@gmail.com">Tosho Toshev</a>
-            </div>
+
+            <div class="footer-copyright red darken-2">
+                <div class="container center">
+                    The Cloudflare Purge plugin is free for use. It falls under the terms and conditions of the Apache v2.0 license.
+                    &copy;<span id="year"></span> - <a class="black-text text-accent-2" href="mailto:cracker4o@gmail.com">Tosho Toshev</a>
+                </div>
+              </div>
         </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script type="text/javascript" src="scripts/site.js"></script>
         <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
     </body>
